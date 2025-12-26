@@ -609,35 +609,5 @@
     data-site="devak-portfolio"
     defer>
   </script>
-
-  <!-- Minimal page JS -->
-  <script>
-    (function () {
-      const spotlight = document.getElementById('spotlight');
-      if (!spotlight) return;
-
-      function move(x, y) {
-        const left = x - 300;
-        const top = y - 300;
-        spotlight.style.transform = `translate(${left}px, ${top}px)`;
-      }
-
-      window.addEventListener('mousemove', (e) => move(e.clientX, e.clientY), { passive: true });
-      window.addEventListener('touchmove', (e) => {
-        if (!e.touches || !e.touches[0]) return;
-        move(e.touches[0].clientX, e.touches[0].clientY);
-      }, { passive: true });
-
-      document.querySelectorAll('a[href^="#"]').forEach(a => {
-        a.addEventListener('click', (ev) => {
-          const id = a.getAttribute('href');
-          const el = document.querySelector(id);
-          if (!el) return;
-          ev.preventDefault();
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-      });
-    })();
-  </script>
 </body>
 </html>
