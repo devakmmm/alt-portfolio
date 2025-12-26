@@ -1,1153 +1,643 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Devak Mehta - Software Engineer</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #13131a;
-            --bg-card: #1a1a24;
-            --text-primary: #ffffff;
-            --text-secondary: #a8a8b3;
-            --accent: #00ffa3;
-            --accent-glow: rgba(0, 255, 163, 0.2);
-            --purple: #a78bfa;
-            --blue: #60a5fa;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            overflow-x: hidden;
-        }
-
-        /* Animated Grid Background */
-        .grid-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(0, 255, 163, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 163, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: 0;
-            animation: gridMove 20s linear infinite;
-        }
-
-        @keyframes gridMove {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
-        }
-
-        /* Spotlight Effect */
-        .spotlight {
-            position: fixed;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 1;
-            transition: transform 0.3s ease;
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 20px 0;
-            background: rgba(10, 10, 15, 0.8);
-            backdrop-filter: blur(20px);
-            z-index: 100;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent), var(--blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            position: relative;
-            z-index: 2;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 40px;
-            list-style: none;
-            position: relative;
-            z-index: 2;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent);
-            transition: width 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--text-primary);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            z-index: 2;
-            padding: 100px 40px 60px;
-        }
-
-        /* Infinite Scroll Tech Stack */
-        .tech-marquee-section {
-            margin: 80px 0 0;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .tech-marquee-wrapper {
-            display: flex;
-            width: 200%;
-            animation: scroll 30s linear infinite;
-        }
-
-        .tech-marquee {
-            display: flex;
-            gap: 20px;
-            width: 100%;
-            align-items: center;
-        }
-
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        .tech-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 16px 24px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            white-space: nowrap;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s;
-            min-width: fit-content;
-        }
-
-        .tech-card:hover {
-            background: rgba(0, 255, 163, 0.1);
-            border-color: var(--accent);
-            transform: scale(1.05);
-        }
-
-        .tech-icon {
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-
-        .tech-name {
-            font-weight: 600;
-            color: var(--text-primary);
-            font-size: 14px;
-        }
-
-        .tech-marquee-wrapper:hover .tech-marquee {
-            animation-play-state: paused;
-        }
-
-        .hero-content {
-            max-width: 1200px;
-            text-align: center;
-        }
-
-        .hero-badge {
-            display: inline-block;
-            padding: 8px 20px;
-            background: rgba(0, 255, 163, 0.1);
-            border: 1px solid rgba(0, 255, 163, 0.3);
-            border-radius: 50px;
-            color: var(--accent);
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 30px;
-            animation: fadeInUp 0.6s ease-out;
-        }
-
-        .hero-title {
-            font-size: clamp(3rem, 10vw, 7rem);
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: fadeInUp 0.6s ease-out 0.1s both;
-        }
-
-        .hero-subtitle {
-            font-size: clamp(1.2rem, 3vw, 2rem);
-            color: var(--text-secondary);
-            margin-bottom: 40px;
-            animation: fadeInUp 0.6s ease-out 0.2s both;
-        }
-
-        .hero-description {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            max-width: 700px;
-            margin: 0 auto 50px;
-            line-height: 1.8;
-            animation: fadeInUp 0.6s ease-out 0.3s both;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-            animation: fadeInUp 0.6s ease-out 0.4s both;
-        }
-
-        .btn {
-            padding: 16px 32px;
-            border-radius: 12px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-primary {
-            background: var(--accent);
-            color: var(--bg-primary);
-            box-shadow: 0 0 30px var(--accent-glow);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 40px var(--accent-glow);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--text-primary);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
-        /* Floating Stats */
-        .floating-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-            max-width: 800px;
-            margin: 60px auto 0;
-            animation: fadeInUp 0.6s ease-out 0.5s both;
-        }
-
-        .stat-box {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 24px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s;
-        }
-
-        .stat-box:hover {
-            background: rgba(0, 255, 163, 0.05);
-            border-color: var(--accent);
-            transform: translateY(-5px);
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--accent);
-            display: block;
-            margin-bottom: 8px;
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        /* Section Styles */
-        .section {
-            padding: 100px 40px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 80px;
-        }
-
-        .section-badge {
-            display: inline-block;
-            padding: 6px 16px;
-            background: rgba(167, 139, 250, 0.1);
-            border: 1px solid rgba(167, 139, 250, 0.3);
-            border-radius: 50px;
-            color: var(--purple);
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 16px;
-        }
-
-        .section-title {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 800;
-            margin-bottom: 20px;
-        }
-
-        .section-subtitle {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* Featured Projects - Bento Grid */
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 24px;
-            margin-bottom: 40px;
-        }
-
-        .bento-item {
-            background: var(--bg-card);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 24px;
-            padding: 32px;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .bento-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent), var(--blue));
-            transform: scaleX(0);
-            transition: transform 0.4s;
-        }
-
-        .bento-item:hover::before {
-            transform: scaleX(1);
-        }
-
-        .bento-item:hover {
-            transform: translateY(-8px);
-            border-color: rgba(0, 255, 163, 0.3);
-            box-shadow: 0 20px 60px rgba(0, 255, 163, 0.1);
-        }
-
-        .bento-item.large {
-            grid-column: span 2;
-        }
-
-        .project-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--accent), var(--blue));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            font-size: 24px;
-        }
-
-        .project-status {
-            display: inline-block;
-            padding: 4px 12px;
-            background: rgba(0, 255, 163, 0.1);
-            border: 1px solid var(--accent);
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--accent);
-            text-transform: uppercase;
-            margin-bottom: 16px;
-        }
-
-        .project-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--text-primary);
-        }
-
-        .project-description {
-            color: var(--text-secondary);
-            line-height: 1.7;
-            margin-bottom: 20px;
-        }
-
-        .project-tech {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-
-        .tech-tag {
-            padding: 6px 12px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            font-size: 12px;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        .project-links {
-            display: flex;
-            gap: 16px;
-            margin-top: auto;
-        }
-
-        .project-link {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.3s;
-        }
-
-        .project-link:hover {
-            gap: 10px;
-        }
-
-        /* Experience Timeline */
-        .timeline {
-            position: relative;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: linear-gradient(180deg, var(--accent), var(--purple));
-        }
-
-        .timeline-item {
-            display: flex;
-            margin-bottom: 50px;
-            position: relative;
-        }
-
-        .timeline-item:nth-child(even) {
-            flex-direction: row-reverse;
-        }
-
-        .timeline-content {
-            width: calc(50% - 40px);
-            background: var(--bg-card);
-            padding: 30px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            position: relative;
-            transition: all 0.3s;
-        }
-
-        .timeline-content:hover {
-            border-color: var(--accent);
-            transform: scale(1.02);
-        }
-
-        .timeline-dot {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 16px;
-            height: 16px;
-            background: var(--accent);
-            border-radius: 50%;
-            border: 4px solid var(--bg-primary);
-            z-index: 10;
-        }
-
-        .timeline-date {
-            color: var(--accent);
-            font-weight: 600;
-            font-size: 14px;
-            margin-bottom: 8px;
-        }
-
-        .timeline-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .timeline-company {
-            color: var(--purple);
-            font-weight: 600;
-            margin-bottom: 16px;
-        }
-
-        .timeline-description {
-            color: var(--text-secondary);
-            line-height: 1.7;
-        }
-
-        .timeline-description li {
-            margin-bottom: 10px;
-            padding-left: 20px;
-            position: relative;
-        }
-
-        .timeline-description li::before {
-            content: '▹';
-            position: absolute;
-            left: 0;
-            color: var(--accent);
-        }
-
-        /* Skills Grid */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-        }
-
-        .skill-card {
-            background: var(--bg-card);
-            padding: 32px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s;
-        }
-
-        .skill-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-5px);
-        }
-
-        .skill-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .skill-card h3 i {
-            color: var(--accent);
-            font-size: 1.5rem;
-        }
-
-        .skill-items {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .skill-item {
-            padding: 10px 16px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            font-size: 14px;
-            color: var(--text-secondary);
-            transition: all 0.3s;
-        }
-
-        .skill-item:hover {
-            background: rgba(0, 255, 163, 0.1);
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
-        /* Contact Section */
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 24px;
-            background: var(--bg-card);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            transition: all 0.3s;
-        }
-
-        .contact-item:hover {
-            border-color: var(--accent);
-            transform: translateX(5px);
-        }
-
-        .contact-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--accent), var(--blue));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            color: var(--bg-primary);
-        }
-
-        .contact-details h4 {
-            font-size: 1rem;
-            margin-bottom: 4px;
-        }
-
-        .contact-details p {
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
-
-        /* Footer */
-        footer {
-            padding: 60px 40px;
-            text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            position: relative;
-            z-index: 2;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            margin-bottom: 30px;
-        }
-
-        .social-link {
-            width: 50px;
-            height: 50px;
-            background: var(--bg-card);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-
-        .social-link:hover {
-            background: var(--accent);
-            color: var(--bg-primary);
-            transform: translateY(-3px);
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .bento-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .bento-item.large {
-                grid-column: span 1;
-            }
-
-            .timeline::before {
-                left: 20px;
-            }
-
-            .timeline-content {
-                width: calc(100% - 60px);
-                margin-left: 60px;
-            }
-
-            .timeline-item:nth-child(even) .timeline-content {
-                margin-left: 60px;
-            }
-
-            .timeline-dot {
-                left: 20px;
-            }
-
-            .contact-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .floating-stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Devak Mehta - Software Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-primary: #0a0a0f;
+      --bg-secondary: #13131a;
+      --bg-card: #1a1a24;
+      --text-primary: #ffffff;
+      --text-secondary: #a8a8b3;
+      --accent: #00ffa3;
+      --accent-glow: rgba(0, 255, 163, 0.2);
+      --purple: #a78bfa;
+      --blue: #60a5fa;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      overflow-x: hidden;
+    }
+
+    /* Animated Grid Background */
+    .grid-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image:
+        linear-gradient(rgba(0, 255, 163, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 163, 0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+      z-index: 0;
+      animation: gridMove 20s linear infinite;
+    }
+
+    @keyframes gridMove {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(50px, 50px); }
+    }
+
+    /* Spotlight Effect */
+    .spotlight {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 1;
+      transition: transform 0.12s ease;
+      transform: translate(-9999px, -9999px);
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 20px 0;
+      background: rgba(10, 10, 15, 0.8);
+      backdrop-filter: blur(20px);
+      z-index: 100;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--accent), var(--blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      position: relative;
+      z-index: 2;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+      position: relative;
+      z-index: 2;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--text-primary); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+      padding: 100px 40px 60px;
+    }
+
+    /* Infinite Scroll Tech Stack */
+    .tech-marquee-section { margin: 80px 0 0; overflow: hidden; position: relative; }
+    .tech-marquee-wrapper { display: flex; width: 200%; animation: scroll 30s linear infinite; }
+    .tech-marquee { display: flex; gap: 20px; width: 100%; align-items: center; }
+
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .tech-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      white-space: nowrap;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s;
+      min-width: fit-content;
+    }
+    .tech-card:hover {
+      background: rgba(0, 255, 163, 0.1);
+      border-color: var(--accent);
+      transform: scale(1.05);
+    }
+    .tech-icon { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+    .tech-name { font-weight: 600; color: var(--text-primary); font-size: 14px; }
+
+    .hero-content { max-width: 1200px; text-align: center; }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 8px 20px;
+      background: rgba(0, 255, 163, 0.1);
+      border: 1px solid rgba(0, 255, 163, 0.3);
+      border-radius: 50px;
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 30px;
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    .hero-title {
+      font-size: clamp(3rem, 10vw, 7rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: fadeInUp 0.6s ease-out 0.1s both;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+      animation: fadeInUp 0.6s ease-out 0.2s both;
+    }
+
+    .hero-description {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin: 0 auto 50px;
+      line-height: 1.8;
+      animation: fadeInUp 0.6s ease-out 0.3s both;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.6s ease-out 0.4s both;
+    }
+
+    .btn {
+      padding: 16px 32px;
+      border-radius: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg-primary);
+      box-shadow: 0 0 30px var(--accent-glow);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 40px var(--accent-glow); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-primary);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* Floating Stats */
+    .floating-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+      max-width: 800px;
+      margin: 60px auto 0;
+      animation: fadeInUp 0.6s ease-out 0.5s both;
+    }
+
+    .stat-box {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s;
+    }
+    .stat-box:hover {
+      background: rgba(0, 255, 163, 0.05);
+      border-color: var(--accent);
+      transform: translateY(-5px);
+    }
+    .stat-number { font-size: 2.5rem; font-weight: 800; color: var(--accent); display: block; margin-bottom: 8px; }
+    .stat-label { font-size: 0.9rem; color: var(--text-secondary); }
+
+    /* Section Styles */
+    .section { padding: 100px 40px; position: relative; z-index: 2; }
+    .container { max-width: 1400px; margin: 0 auto; }
+    .section-header { text-align: center; margin-bottom: 80px; }
+
+    .section-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background: rgba(167, 139, 250, 0.1);
+      border: 1px solid rgba(167, 139, 250, 0.3);
+      border-radius: 50px;
+      color: var(--purple);
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .section-title { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin-bottom: 20px; }
+    .section-subtitle { font-size: 1.2rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
+
+    /* Featured Projects - Bento Grid */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .bento-item {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 24px;
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .bento-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--blue));
+      transform: scaleX(0);
+      transition: transform 0.4s;
+    }
+
+    .bento-item:hover::before { transform: scaleX(1); }
+
+    .bento-item:hover {
+      transform: translateY(-8px);
+      border-color: rgba(0, 255, 163, 0.3);
+      box-shadow: 0 20px 60px rgba(0, 255, 163, 0.1);
+    }
+
+    .bento-item.large { grid-column: span 2; }
+
+    .project-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--accent), var(--blue));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+    .project-status {
+      display: inline-block;
+      padding: 4px 12px;
+      background: rgba(0, 255, 163, 0.1);
+      border: 1px solid var(--accent);
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .project-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 12px; color: var(--text-primary); }
+    .project-description { color: var(--text-secondary); line-height: 1.7; margin-bottom: 20px; }
+
+    .project-tech { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .tech-tag { padding: 6px 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; font-size: 12px; color: var(--text-secondary); font-weight: 500; }
+
+    .project-links { display: flex; gap: 16px; margin-top: auto; }
+    .project-link { color: var(--accent); text-decoration: none; font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 6px; transition: all 0.3s; }
+    .project-link:hover { gap: 10px; }
+
+    /* Experience Timeline */
+    .timeline { position: relative; max-width: 1000px; margin: 0 auto; }
+    .timeline::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: linear-gradient(180deg, var(--accent), var(--purple)); }
+
+    .timeline-item { display: flex; margin-bottom: 50px; position: relative; }
+    .timeline-item:nth-child(even) { flex-direction: row-reverse; }
+
+    .timeline-content {
+      width: calc(50% - 40px);
+      background: var(--bg-card);
+      padding: 30px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      position: relative;
+      transition: all 0.3s;
+    }
+    .timeline-content:hover { border-color: var(--accent); transform: scale(1.02); }
+
+    .timeline-dot {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 16px;
+      height: 16px;
+      background: var(--accent);
+      border-radius: 50%;
+      border: 4px solid var(--bg-primary);
+      z-index: 10;
+    }
+
+    .timeline-date { color: var(--accent); font-weight: 600; font-size: 14px; margin-bottom: 8px; }
+    .timeline-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; }
+    .timeline-company { color: var(--purple); font-weight: 600; margin-bottom: 16px; }
+
+    .timeline-description { color: var(--text-secondary); line-height: 1.7; }
+    .timeline-description li { margin-bottom: 10px; padding-left: 20px; position: relative; }
+    .timeline-description li::before { content: '▹'; position: absolute; left: 0; color: var(--accent); }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .bento-grid { grid-template-columns: 1fr; }
+      .bento-item.large { grid-column: span 1; }
+      .timeline::before { left: 20px; }
+      .timeline-content { width: calc(100% - 60px); margin-left: 60px; }
+      .timeline-item:nth-child(even) .timeline-content { margin-left: 60px; }
+      .timeline-dot { left: 20px; }
+      .floating-stats { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
 </head>
-    <script
-  src="https://webwidget-2hpa.onrender.com/widget.js"
-  data-site="devak-portfolio">
-</script>
+
 <body>
-    <div class="grid-bg"></div>
-    <div class="spotlight" id="spotlight"></div>
+  <div class="grid-bg"></div>
+  <div class="spotlight" id="spotlight"></div>
 
-    <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <div class="logo">DM</div>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#contact">Contact</a></li>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <div class="logo">DM</div>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">Available for Full-Time • May 2026</div>
+      <h1 class="hero-title">Devak Mehta</h1>
+      <p class="hero-subtitle">Full-Stack Engineer & AI Developer</p>
+      <p class="hero-description">
+        Building scalable systems and intelligent applications. CS @ Queens College with 3+ years of
+        experience shipping production software across fintech, healthcare, and education.
+      </p>
+
+      <div class="hero-buttons">
+        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="mailto:mdevak44@gmail.com" class="btn btn-secondary">Get in Touch</a>
+        <a href="https://github.com/devakmmm" target="_blank" class="btn btn-secondary">
+          <i class="fab fa-github"></i> GitHub
+        </a>
+        <a href="http://www.linkedin.com/in/devak-mehta" target="_blank" class="btn btn-secondary">
+          <i class="fab fa-linkedin"></i> LinkedIn
+        </a>
+      </div>
+
+      <div class="floating-stats">
+        <div class="stat-box"><span class="stat-number">15+</span><span class="stat-label">Apps Deployed</span></div>
+        <div class="stat-box"><span class="stat-number">3+</span><span class="stat-label">Years Experience</span></div>
+        <div class="stat-box"><span class="stat-number">2.5K+</span><span class="stat-label">Users Served</span></div>
+        <div class="stat-box"><span class="stat-number">95%</span><span class="stat-label">System Uptime</span></div>
+      </div>
+
+      <!-- Infinite Tech Stack Marquee -->
+      <div class="tech-marquee-section">
+        <div class="tech-marquee-wrapper">
+          <div class="tech-marquee">
+            <div class="tech-card"><div class="tech-icon">⚛️</div><span class="tech-name">React</span></div>
+            <div class="tech-card"><div class="tech-icon">📗</div><span class="tech-name">Node.js</span></div>
+            <div class="tech-card"><div class="tech-icon">🐍</div><span class="tech-name">Python</span></div>
+            <div class="tech-card"><div class="tech-icon">🎯</div><span class="tech-name">TypeScript</span></div>
+            <div class="tech-card"><div class="tech-icon">🗄️</div><span class="tech-name">PostgreSQL</span></div>
+            <div class="tech-card"><div class="tech-icon">☁️</div><span class="tech-name">AWS</span></div>
+            <div class="tech-card"><div class="tech-icon">🐳</div><span class="tech-name">Docker</span></div>
+            <div class="tech-card"><div class="tech-icon">🍃</div><span class="tech-name">MongoDB</span></div>
+          </div>
+          <div class="tech-marquee">
+            <div class="tech-card"><div class="tech-icon">⚛️</div><span class="tech-name">React</span></div>
+            <div class="tech-card"><div class="tech-icon">📗</div><span class="tech-name">Node.js</span></div>
+            <div class="tech-card"><div class="tech-icon">🐍</div><span class="tech-name">Python</span></div>
+            <div class="tech-card"><div class="tech-icon">🎯</div><span class="tech-name">TypeScript</span></div>
+            <div class="tech-card"><div class="tech-icon">🗄️</div><span class="tech-name">PostgreSQL</span></div>
+            <div class="tech-card"><div class="tech-icon">☁️</div><span class="tech-name">AWS</span></div>
+            <div class="tech-card"><div class="tech-icon">🐳</div><span class="tech-name">Docker</span></div>
+            <div class="tech-card"><div class="tech-icon">🍃</div><span class="tech-name">MongoDB</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Projects -->
+  <section id="projects" class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">Recent Work</div>
+        <h2 class="section-title">Featured Projects</h2>
+        <p class="section-subtitle">Production applications solving real-world problems</p>
+      </div>
+
+      <div class="bento-grid">
+        <!-- HiringRadar -->
+        <div class="bento-item large">
+          <div class="project-icon">📊</div>
+          <span class="project-status">Live</span>
+          <h3 class="project-title">HiringRadar</h3>
+          <p class="project-description">
+            Hiring intelligence dashboard with OAuth 2.0 authentication and real-time job market analytics.
+            Integrates USAJOBS API with intelligent caching and rate-limit handling to deliver hiring trends and benchmarks.
+          </p>
+          <div class="project-tech">
+            <span class="tech-tag">Node.js</span>
+            <span class="tech-tag">OAuth 2.0</span>
+            <span class="tech-tag">REST APIs</span>
+            <span class="tech-tag">USAJOBS API</span>
+          </div>
+          <div class="project-links">
+            <a href="https://hiringradar.onrender.com/" target="_blank" class="project-link">View Live <i class="fas fa-arrow-right"></i></a>
+            <a href="https://github.com/devakmmm" target="_blank" class="project-link">GitHub <i class="fab fa-github"></i></a>
+          </div>
+        </div>
+
+        <!-- WebWidget -->
+        <div class="bento-item">
+          <div class="project-icon">🧩</div>
+          <span class="project-status">Live</span>
+          <h3 class="project-title">WebWidget</h3>
+          <p class="project-description">
+            Drop-in website widget. Add it to any site with one script tag (great for small businesses).
+          </p>
+          <div class="project-tech">
+            <span class="tech-tag">JavaScript</span>
+            <span class="tech-tag">Node.js</span>
+            <span class="tech-tag">Render</span>
+          </div>
+          <div class="project-links">
+            <a href="https://webwidget-2hpa.onrender.com/" target="_blank" class="project-link">Demo <i class="fas fa-arrow-right"></i></a>
+            <a href="https://github.com/devakmmm/WebWidget" target="_blank" class="project-link">GitHub <i class="fab fa-github"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience Section -->
+  <section id="experience" class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">Career Journey</div>
+        <h2 class="section-title">Experience</h2>
+        <p class="section-subtitle">Building impactful systems across education, fintech, and health-tech</p>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">Jan 2024 - Jan 2025</div>
+            <h3 class="timeline-title">Software Engineer</h3>
+            <div class="timeline-company">International Health School for Health and Sciences</div>
+            <ul class="timeline-description">
+              <li>Developed web-based grading automation tool using Python, React, and PostgreSQL, reducing manual grading time by 40% for instructors across 5+ courses</li>
+              <li>Built and deployed REST APIs using Node.js and Express to handle student submissions and feedback delivery, supporting 150+ active student users</li>
+              <li>Collaborated with 4-person development team using Git and GitHub to implement new features, resolve bugs, and improve UI responsiveness across desktop and mobile devices</li>
             </ul>
+          </div>
         </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <div class="hero-badge">Available for Full-Time • May 2026</div>
-            <h1 class="hero-title">Devak Mehta</h1>
-            <p class="hero-subtitle">Full-Stack Engineer & AI Developer</p>
-            <p class="hero-description">
-                Building scalable systems and intelligent applications. CS @ Queens College with 3+ years of 
-                experience shipping production software across fintech, healthcare, and education.
-            </p>
-            <div class="hero-buttons">
-                <a href="#projects" class="btn btn-primary">View Projects</a>
-                <a href="mailto:mdevak44@gmail.com" class="btn btn-secondary">Get in Touch</a>
-                <a href="https://github.com/devakmmm" target="_blank" class="btn btn-secondary">
-                    <i class="fab fa-github"></i> GitHub
-                </a>
-                <a href="http://www.linkedin.com/in/devak-mehta" target="_blank" class="btn btn-secondary">
-                    <i class="fab fa-linkedin"></i> LinkedIn
-                </a>
-            </div>
-            
-            <div class="floating-stats">
-                <div class="stat-box">
-                    <span class="stat-number">15+</span>
-                    <span class="stat-label">Apps Deployed</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-number">3+</span>
-                    <span class="stat-label">Years Experience</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-number">2.5K+</span>
-                    <span class="stat-label">Users Served</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-number">95%</span>
-                    <span class="stat-label">System Uptime</span>
-                </div>
-            </div>
-
-            <!-- Infinite Tech Stack Marquee -->
-            <div class="tech-marquee-section">
-                <div class="tech-marquee-wrapper">
-                    <div class="tech-marquee">
-                        <div class="tech-card">
-                            <div class="tech-icon">⚛️</div>
-                            <span class="tech-name">React</span>
-                        </div>
-                        <div class="tech-card">
-                            <div class="tech-icon">📗</div>
-                            <span class="tech-name">Node.js</span>
-                        </div>
-                        <div class="tech-card">
-                            <div class="tech-icon">🐍</div>
-                            <span class="tech-name">Python</span>
-                        </div>
-                        <div class="tech-card">
-                            <div class="tech-icon">🎯</div>
-                            <span class="tech-name">TypeScript</span>
-                        </div>
-                        <div class="tech-card">
-                            <div class="tech-icon">🗄️</div>
-                            <span class="tech-name">PostgreSQL</span>
-                        </div>
-                        <div class="tech-card">
-                            <div class="tech-icon">☁️</div>
-                            <span class="tech-name">AWS</span>
-                        </div>
-                        <div class="tech-card">
-                            <div class="tech-icon">🔥</div>
-                            <span class="tech-name">Firebase</span>
-                        </div>
-                        <div class="tech-card">
-                            <div class="tech-icon">🐳</div>
-                            <span class="tech-name">Docker</span>
-                        </div>
-                        <div class="tech-card">
-                            <div class="tech-icon">🤖</div>
-                            <span class="tech-name">TensorFlow</span>
-                        </div>
-                        <div class="tech-card">
-                            <div class="tech-icon">⚡</div>
-                            <span class="tech-name">Next.js</span>
-                        </div>
-                        <div class="tech-card">
-                            <div class="tech-icon">💎</div>
-                            <span class="tech-name">Ruby on Rails</span>
-                        </div>
-                        <div class="tech-card">
-                            <div class="tech-icon">🍃</div>
-                            <span class="tech-name">MongoDB</span>
-                        </div>
-                    </div>
-                    <!-- Duplicate for seamless loop -->
-                    <div class="tech-marquee">
-                        <div class="tech-card">
-                            <div class="tech-icon">⚛️</div>
-                            <span class="tech-name">React</span>
-                        </div>
-                        <div class="tech-card">
-                            <div class="tech-icon">📗</div>
-                            <span class="tech-name">Node.js</span>
-                        </div>
-                        <div class="tech-card">
-                            <div class="tech-icon">🐍</div>
-                            <span class="tech-name">Python</span>
-                        </div>
-                        <div class="tech-card">
-                            <div class="tech-icon">🎯</div>
-                            <span class="tech-name">TypeScript</span>
-                        </div>
-                        <div class="tech-card">
-                            <div class="tech-icon">🗄️</div>
-                            <span class="tech-name">PostgreSQL</span>
-                        </div>
-                        <div class="tech-card">
-                            <div class="tech-icon">☁️</div>
-                            <span class="tech-name">AWS</span>
-                        </div>
-                        <div class="tech-card">
-                            <div class="tech-icon">🔥</div>
-                            <span class="tech-name">Firebase</span>
-                        </div>
-                        <div class="tech-card">
-                            <div class="tech-icon">🐳</div>
-                            <span class="tech-name">Docker</span>
-                        </div>
-                        <div class="tech-card">
-                            <div class="tech-icon">🤖</div>
-                            <span class="tech-name">TensorFlow</span>
-                        </div>
-                        <div class="tech-card">
-                            <div class="tech-icon">⚡</div>
-                            <span class="tech-name">Next.js</span>
-                        </div>
-                        <div class="tech-card">
-                            <div class="tech-icon">💎</div>
-                            <span class="tech-name">Ruby on Rails</span>
-                        </div>
-                        <div class="tech-card">
-                            <div class="tech-icon">🍃</div>
-                            <span class="tech-name">MongoDB</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">Feb 2023 - Jul 2024</div>
+            <h3 class="timeline-title">Software Engineering Intern</h3>
+            <div class="timeline-company">Mehta Papers</div>
+            <ul class="timeline-description">
+              <li>Automated internal document workflows using Python scripts and OCR tools, reducing document processing time by 45%</li>
+              <li>Implemented machine learning text classification model using TensorFlow to tag and organize scanned documents with over 85% accuracy</li>
+              <li>Assisted in database design and API development using PostgreSQL and Flask, supporting search and retrieval for 2,000+ archived files</li>
+            </ul>
+          </div>
         </div>
-    </section>
 
-    <!-- Featured Projects -->
-    <section id="projects" class="section">
-        <div class="container">
-            <div class="section-header">
-                <div class="section-badge">Recent Work</div>
-                <h2 class="section-title">Featured Projects</h2>
-                <p class="section-subtitle">Production applications solving real-world problems</p>
-            </div>
-
-            <div class="bento-grid">
-                <!-- HiringRadar -->
-                <div class="bento-item large">
-                    <div class="project-icon">📊</div>
-                    <span class="project-status">Live</span>
-                    <h3 class="project-title">HiringRadar</h3>
-                    <p class="project-description">
-                        Hiring intelligence dashboard with OAuth 2.0 authentication and real-time job market analytics. 
-                        Integrates USAJOBS API with intelligent caching and rate-limit handling to deliver hiring trends 
-                        and benchmarks across government sectors.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Node.js</span>
-                        <span class="tech-tag">OAuth 2.0</span>
-                        <span class="tech-tag">REST APIs</span>
-                        <span class="tech-tag">USAJOBS API</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="https://github.com/devakmmm" target="_blank" class="project-link">View Live <i class="fas fa-arrow-right"></i></a>
-                        <a href="https://github.com/devakmmm" target="_blank" class="project-link">GitHub <i class="fab fa-github"></i></a>
-                    </div>
-                </div>
-
-                <!-- CureTrek -->
-                <div class="bento-item">
-                    <div class="project-icon">🏥</div>
-                    <span class="project-status">Live</span>
-                    <h3 class="project-title">CureTrek</h3>
-                    <p class="project-description">
-                        Healthcare claims automation platform that reduces manual claims review by 60%. Built REST APIs 
-                        and eligibility verification pipelines for real-world healthcare workflows.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Node.js</span>
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">React</span>
-                        <span class="tech-tag">PostgreSQL</span>
-                        <span class="tech-tag">AWS Lambda</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="https://github.com/devakmmm" target="_blank" class="project-link">View Live <i class="fas fa-arrow-right"></i></a>
-                        <a href="https://github.com/devakmmm" target="_blank" class="project-link">GitHub <i class="fab fa-github"></i></a>
-                    </div>
-                </div>
-
-                <!-- AI Legal Advisor -->
-                <div class="bento-item">
-                    <div class="project-icon">⚖️</div>
-                    <span class="project-status">Live</span>
-                    <h3 class="project-title">AI Legal Advisor</h3>
-                    <p class="project-description">
-                        AI-powered legal assistant using LLMs to simplify access to legal information. Features secure 
-                        authentication, conversation history, and real-time API response handling.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">React</span>
-                        <span class="tech-tag">Node.js</span>
-                        <span class="tech-tag">Express</span>
-                        <span class="tech-tag">OpenAI API</span>
-                        <span class="tech-tag">MongoDB</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="https://github.com/devakmmm" target="_blank" class="project-link">View Live <i class="fas fa-arrow-right"></i></a>
-                        <a href="https://github.com/devakmmm" target="_blank" class="project-link">GitHub <i class="fab fa-github"></i></a>
-                    </div>
-                </div>
-
-                <!-- AI Code Reviewer -->
-                <div class="bento-item">
-                    <div class="project-icon">🔍</div>
-                    <span class="project-status">Live</span>
-                    <h3 class="project-title">AI Code Reviewer</h3>
-                    <p class="project-description">
-                        Smart code review platform supporting HTML, CSS, JavaScript, and Python. Highlights errors, 
-                        suggests optimizations, and provides actionable feedback.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Flask</span>
-                        <span class="tech-tag">OpenAI API</span>
-                        <span class="tech-tag">Python</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="https://ai-code-reviewer-iool.onrender.com" class="project-link">View Live <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-
-                <!-- Other Projects -->
-                <div class="bento-item">
-                    <div class="project-icon">🎨</div>
-                    <h3 class="project-title">Color Palette Generator</h3>
-                    <p class="project-description">
-                        Design tool for generating color palettes with CSS export functionality. Built for rapid 
-                        prototyping and design systems.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">JavaScript</span>
-                        <span class="tech-tag">CSS</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="https://devak-color.netlify.app" class="project-link">View Live <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-
-                <div class="bento-item">
-                    <div class="project-icon">📝</div>
-                    <h3 class="project-title">E-Resume Builder</h3>
-                    <p class="project-description">
-                        Dynamic resume creation tool with real-time preview and PDF export for developers.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">React</span>
-                        <span class="tech-tag">PDF.js</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="https://devak-e-resume.netlify.app" class="project-link">View Live <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-
-                <div class="bento-item">
-                    <div class="project-icon">🔐</div>
-                    <h3 class="project-title">Secure Password Generator</h3>
-                    <p class="project-description">
-                        Generate cryptographically secure passwords with customizable parameters and strength indicators.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">JavaScript</span>
-                        <span class="tech-tag">Web Crypto API</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="https://safe-passcode-generator.netlify.app" target="_blank" class="project-link">View Live <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">Aug 2022 - Oct 2023</div>
+            <h3 class="timeline-title">Junior Full-Stack Developer</h3>
+            <div class="timeline-company">MNC Development</div>
+            <ul class="timeline-description">
+              <li>Developed full-stack web features using React, Node.js, Express, and PostgreSQL for client websites serving 3,000+ monthly users</li>
+              <li>Integrated third-party APIs and authentication systems to support secure user login and form submissions across 6 client projects</li>
+              <li>Worked in an Agile environment to deliver weekly feature updates, participate in sprint planning, and perform peer code reviews using GitHub</li>
+            </ul>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- Experience Section -->
-    <section id="experience" class="section">
-        <div class="container">
-            <div class="section-header">
-                <div class="section-badge">Career Journey</div>
-                <h2 class="section-title">Experience</h2>
-                <p class="section-subtitle">Building impactful systems across education, fintech, and health-tech</p>
-            </div>
+  <!-- ✅ WebWidget embed (correct place: right before closing </body>) -->
+  <script
+    src="https://webwidget-2hpa.onrender.com/widget.js"
+    data-site="devak-portfolio"
+    defer>
+  </script>
 
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">Jan 2024 - Jan 2025</div>
-                        <h3 class="timeline-title">Software Engineer</h3>
-                        <div class="timeline-company">International Health School for Health and Sciences</div>
-                        <ul class="timeline-description">
-                            <li>Developed web-based grading automation tool using Python, React, and PostgreSQL, reducing manual grading time by 40% for instructors across 5+ courses</li>
-                            <li>Built and deployed REST APIs using Node.js and Express to handle student submissions and feedback delivery, supporting 150+ active student users</li>
-                            <li>Collaborated with 4-person development team using Git and GitHub to implement new features, resolve bugs, and improve UI responsiveness across desktop and mobile devices</li>
-                        </ul>
-                    </div>
-                </div>
+  <!-- Minimal page JS -->
+  <script>
+    (function () {
+      const spotlight = document.getElementById('spotlight');
+      if (!spotlight) return;
 
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">Feb 2023 - Jul 2024</div>
-                        <h3 class="timeline-title">Software Engineering Intern</h3>
-                        <div class="timeline-company">Mehta Papers</div>
-                        <ul class="timeline-description">
-                            <li>Automated internal document workflows using Python scripts and OCR tools, reducing document processing time by 45%</li>
-                            <li>Implemented machine learning text classification model using TensorFlow to tag and organize scanned documents with over 85% accuracy</li>
-                            <li>Assisted in database design and API development using PostgreSQL and Flask, supporting search and retrieval for 2,000+ archived files</li>
-                        </ul>
-                    </div>
-                </div>
+      function move(x, y) {
+        const left = x - 300;
+        const top = y - 300;
+        spotlight.style.transform = `translate(${left}px, ${top}px)`;
+      }
 
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">Aug 2022 - Oct 2023</div>
-                        <h3 class="timeline-title">Junior Full-Stack Developer</h3>
-                        <div class="timeline-company">MNC Development</div>
-                        <ul class="timeline-description">
-                            <li>Developed full-stack web features using React, Node.js, Express, and PostgreSQL for client websites serving 3,000+ monthly users</li>
-                            <li>Integrated third-party APIs and authentication systems to support secure user login and form submissions across 6 client projects</li>
-                            <li>Worked in Agile environment to deliver weekly feature updates, participate in sprint planning, and perform peer code reviews using GitHub</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+      window.addEventListener('mousemove', (e) => move(e.clientX, e.clientY), { passive: true });
+      window.addEventListener('touchmove', (e) => {
+        if (!e.touches || !e.touches[0]) return;
+        move(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
+
+      document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', (ev) => {
+          const id = a.getAttribute('href');
+          const el = document.querySelector(id);
+          if (!el) return;
+          ev.preventDefault();
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
