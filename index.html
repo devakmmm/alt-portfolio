@@ -444,6 +444,49 @@
       margin-top: 4px;
     }
 
+    /* === Prism / Crystal Hero Visual === */
+    .hero {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-prism {
+      position: absolute;
+      right: -120px;
+      top: 52%;
+      transform: translateY(-50%);
+      width: min(760px, 60vw);
+      height: auto;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.95;
+      filter: drop-shadow(0 30px 80px rgba(0,0,0,0.55));
+      animation: prismFloat 10s ease-in-out infinite;
+    }
+
+    .hero-prism::before {
+      content: "";
+      position: absolute;
+      inset: -120px;
+      background:
+        radial-gradient(circle at 35% 40%, rgba(6,182,212,0.22) 0%, transparent 55%),
+        radial-gradient(circle at 65% 55%, rgba(168,85,247,0.20) 0%, transparent 58%),
+        radial-gradient(circle at 50% 50%, rgba(0,255,136,0.10) 0%, transparent 60%);
+      filter: blur(40px);
+      opacity: 0.9;
+      z-index: -1;
+    }
+
+    .hero > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    @keyframes prismFloat {
+      0%, 100% { transform: translateY(-50%) translateX(0) rotate(-2deg); }
+      50%      { transform: translateY(-52%) translateX(-8px) rotate(1deg); }
+    }
+
     /* Ambient Glow - Clean and Smooth */
     .ambient-glow {
       position: fixed;
@@ -905,6 +948,14 @@
     }
 
     /* Responsive */
+    @media (max-width: 900px) {
+      .hero-prism {
+        right: -220px;
+        opacity: 0.55;
+        width: min(700px, 85vw);
+      }
+    }
+
     @media (max-width: 768px) {
       .nav-links { display: none; }
       .mobile-menu-btn { display: block; }
@@ -915,6 +966,10 @@
       
       .stats-row { gap: 24px; }
       .stat-number { font-size: 1.5rem; }
+      
+      .hero-prism {
+        display: none;
+      }
       
       .glow-blob.blob-1 {
         width: 80vw;
@@ -988,6 +1043,51 @@
 
   <!-- Hero Section -->
   <section id="home" class="hero">
+    <!-- Decorative prism visual -->
+    <div class="hero-prism" aria-hidden="true">
+      <svg viewBox="0 0 980 520" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="glassA" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="rgba(6,182,212,0.65)"/>
+            <stop offset="0.45" stop-color="rgba(168,85,247,0.55)"/>
+            <stop offset="1" stop-color="rgba(0,255,136,0.35)"/>
+          </linearGradient>
+          <linearGradient id="glassB" x1="1" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="rgba(236,72,153,0.40)"/>
+            <stop offset="0.55" stop-color="rgba(59,130,246,0.35)"/>
+            <stop offset="1" stop-color="rgba(6,182,212,0.25)"/>
+          </linearGradient>
+          <linearGradient id="edge" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="rgba(255,255,255,0.65)"/>
+            <stop offset="0.5" stop-color="rgba(255,255,255,0.18)"/>
+            <stop offset="1" stop-color="rgba(255,255,255,0.55)"/>
+          </linearGradient>
+          <radialGradient id="shine" cx="35%" cy="35%" r="70%">
+            <stop offset="0" stop-color="rgba(255,255,255,0.55)"/>
+            <stop offset="0.35" stop-color="rgba(255,255,255,0.12)"/>
+            <stop offset="1" stop-color="rgba(255,255,255,0)"/>
+          </radialGradient>
+          <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="6" result="b"/>
+            <feColorMatrix in="b" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.7 0" result="g"/>
+            <feMerge>
+              <feMergeNode in="g"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+        <g filter="url(#softGlow)" opacity="0.95">
+          <path d="M120 260 L780 120 L900 240 L240 400 Z" fill="url(#glassA)" stroke="url(#edge)" stroke-width="2.5"/>
+          <path d="M120 260 L780 120 L700 80 L60 220 Z" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.18)" stroke-width="2"/>
+          <path d="M780 120 L900 240 L830 290 L710 170 Z" fill="url(#glassB)" stroke="rgba(255,255,255,0.22)" stroke-width="2"/>
+          <path d="M240 400 L900 240 L830 290 L210 430 Z" fill="rgba(6,182,212,0.14)" stroke="rgba(255,255,255,0.14)" stroke-width="2"/>
+          <path d="M220 280 L640 160 L700 200 L280 330 Z" fill="rgba(255,255,255,0.08)"/>
+          <path d="M360 360 L720 210 L760 240 L400 390 Z" fill="rgba(0,255,136,0.06)"/>
+          <path d="M120 260 L780 120 L900 240 L240 400 Z" fill="url(#shine)"/>
+        </g>
+      </svg>
+    </div>
+
     <div class="hero-badge">Available for Full-Time • May 2026</div>
     <h1 class="hero-title">
       <span class="line1">Full-Stack Engineer</span>
