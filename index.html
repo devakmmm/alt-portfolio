@@ -34,8 +34,8 @@
       line-height: 1.6;
     }
 
-    /* Ambient Background */
-    .ambient-bg {
+    /* Aurora Background */
+    .aurora-bg {
       position: fixed;
       top: 0;
       left: 0;
@@ -44,47 +44,110 @@
       z-index: 0;
       overflow: hidden;
       pointer-events: none;
+      background: 
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 255, 136, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 40% at 80% 0%, rgba(6, 182, 212, 0.1) 0%, transparent 40%),
+        radial-gradient(ellipse 50% 30% at 20% 10%, rgba(168, 85, 247, 0.08) 0%, transparent 40%),
+        linear-gradient(180deg, #030303 0%, #050505 50%, #030303 100%);
+    }
+
+    /* Main Light Beam */
+    .light-beam {
+      position: absolute;
+      top: -50%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      height: 100%;
+      background: conic-gradient(
+        from 180deg at 50% 0%,
+        transparent 40%,
+        rgba(0, 255, 136, 0.03) 45%,
+        rgba(0, 255, 136, 0.08) 50%,
+        rgba(0, 255, 136, 0.03) 55%,
+        transparent 60%
+      );
+      animation: beamPulse 8s ease-in-out infinite;
+    }
+
+    @keyframes beamPulse {
+      0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+      50% { opacity: 1; transform: translateX(-50%) scale(1.05); }
+    }
+
+    /* Floating Orbs */
+    .orb-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
     }
 
     .glow-orb {
       position: absolute;
       border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.5;
-      animation: float 20s ease-in-out infinite;
+      filter: blur(100px);
+      animation: orbFloat 25s ease-in-out infinite;
     }
 
-    .glow-orb.green {
+    .glow-orb.primary {
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(0, 255, 136, 0.2) 0%, rgba(0, 255, 136, 0.05) 40%, transparent 70%);
+      top: -400px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .glow-orb.secondary {
       width: 600px;
       height: 600px;
-      background: radial-gradient(circle, rgba(0, 255, 136, 0.3) 0%, transparent 70%);
-      top: -200px;
-      left: -200px;
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, transparent 60%);
+      top: 20%;
+      right: -200px;
+      animation-delay: -8s;
     }
 
-    .glow-orb.purple {
+    .glow-orb.tertiary {
       width: 500px;
       height: 500px;
-      background: radial-gradient(circle, rgba(168, 85, 247, 0.25) 0%, transparent 70%);
-      top: 50%;
-      right: -150px;
-      animation-delay: -10s;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.12) 0%, transparent 60%);
+      bottom: -200px;
+      left: -100px;
+      animation-delay: -16s;
     }
 
-    .glow-orb.blue {
+    .glow-orb.accent {
       width: 400px;
       height: 400px;
-      background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%);
-      bottom: -100px;
-      left: 30%;
-      animation-delay: -5s;
+      background: radial-gradient(circle, rgba(0, 255, 136, 0.1) 0%, transparent 60%);
+      top: 60%;
+      left: 60%;
+      animation-delay: -12s;
     }
 
-    @keyframes float {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      25% { transform: translate(50px, -30px) scale(1.1); }
-      50% { transform: translate(-30px, 50px) scale(0.95); }
-      75% { transform: translate(40px, 20px) scale(1.05); }
+    @keyframes orbFloat {
+      0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.8; }
+      25% { transform: translate(30px, -40px) scale(1.1); opacity: 1; }
+      50% { transform: translate(-20px, 30px) scale(0.9); opacity: 0.7; }
+      75% { transform: translate(40px, 20px) scale(1.05); opacity: 0.9; }
+    }
+
+    /* Noise Texture Overlay */
+    .noise-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
     }
 
     /* Grid Pattern */
@@ -95,15 +158,17 @@
       width: 100%;
       height: 100%;
       background-image: 
-        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-      background-size: 60px 60px;
+        linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+      background-size: 80px 80px;
       z-index: 1;
       pointer-events: none;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 0%, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 0%, transparent 70%);
     }
 
-    /* Starfield */
-    .stars {
+    /* Particle Stars */
+    .particles {
       position: fixed;
       top: 0;
       left: 0;
@@ -113,19 +178,43 @@
       pointer-events: none;
     }
 
-    .star {
+    .particle {
       position: absolute;
       width: 2px;
       height: 2px;
-      background: white;
+      background: rgba(0, 255, 136, 0.6);
       border-radius: 50%;
-      opacity: 0.3;
-      animation: twinkle 3s ease-in-out infinite;
+      box-shadow: 0 0 6px rgba(0, 255, 136, 0.4);
+      animation: particleFloat 20s linear infinite;
     }
 
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 0.8; }
+    .particle:nth-child(odd) {
+      background: rgba(6, 182, 212, 0.5);
+      box-shadow: 0 0 6px rgba(6, 182, 212, 0.3);
+    }
+
+    .particle:nth-child(3n) {
+      background: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 0 4px rgba(255, 255, 255, 0.2);
+    }
+
+    @keyframes particleFloat {
+      0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+    }
+
+    /* Vignette Effect */
+    .vignette {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+      background: radial-gradient(ellipse at center, transparent 0%, transparent 50%, rgba(0, 0, 0, 0.4) 100%);
     }
 
     /* Navigation */
@@ -815,16 +904,26 @@
 </head>
 
 <body>
-  <!-- Ambient Background -->
-  <div class="ambient-bg">
-    <div class="glow-orb green"></div>
-    <div class="glow-orb purple"></div>
-    <div class="glow-orb blue"></div>
+  <!-- Aurora Background -->
+  <div class="aurora-bg">
+    <div class="light-beam"></div>
   </div>
-  <div class="grid-pattern"></div>
   
-  <!-- Stars -->
-  <div class="stars" id="stars"></div>
+  <!-- Floating Orbs -->
+  <div class="orb-container">
+    <div class="glow-orb primary"></div>
+    <div class="glow-orb secondary"></div>
+    <div class="glow-orb tertiary"></div>
+    <div class="glow-orb accent"></div>
+  </div>
+  
+  <!-- Grid & Effects -->
+  <div class="grid-pattern"></div>
+  <div class="noise-overlay"></div>
+  <div class="vignette"></div>
+  
+  <!-- Particles -->
+  <div class="particles" id="particles"></div>
 
   <!-- Navigation -->
   <nav>
@@ -1227,18 +1326,19 @@
     <p>© 2026 Devak Mehta. Built with passion.</p>
   </footer>
 
-  <!-- Generate Stars -->
+  <!-- Generate Particles -->
   <script>
-    // Generate random stars
-    const starsContainer = document.getElementById('stars');
-    for (let i = 0; i < 100; i++) {
-      const star = document.createElement('div');
-      star.className = 'star';
-      star.style.left = Math.random() * 100 + '%';
-      star.style.top = Math.random() * 100 + '%';
-      star.style.animationDelay = Math.random() * 3 + 's';
-      star.style.opacity = Math.random() * 0.5 + 0.2;
-      starsContainer.appendChild(star);
+    // Generate floating particles
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 50; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.animationDuration = (15 + Math.random() * 20) + 's';
+      particle.style.animationDelay = Math.random() * 20 + 's';
+      particle.style.width = (1 + Math.random() * 2) + 'px';
+      particle.style.height = particle.style.width;
+      particlesContainer.appendChild(particle);
     }
 
     // Smooth scroll for anchor links
@@ -1249,6 +1349,16 @@
         if (target) {
           target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
+      });
+    });
+
+    // Parallax effect on scroll for orbs
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const orbs = document.querySelectorAll('.glow-orb');
+      orbs.forEach((orb, i) => {
+        const speed = 0.1 + (i * 0.05);
+        orb.style.transform = `translateY(${scrolled * speed}px)`;
       });
     });
   </script>
