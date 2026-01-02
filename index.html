@@ -507,6 +507,7 @@
       overflow: hidden;
     }
 
+
     .spotlight {
       position: absolute;
       width: 40%;
@@ -514,14 +515,16 @@
       background: conic-gradient(
         from 90deg at 50% 0%,
         transparent 0deg,
-        rgba(34, 255, 153, 0.03) 40deg,
-        rgba(34, 255, 153, 0.08) 90deg,
-        rgba(34, 255, 153, 0.03) 140deg,
+        rgba(34, 255, 153, 0.10) 60deg,
+        rgba(34, 255, 153, 0.18) 90deg,
+        rgba(34, 255, 153, 0.10) 120deg,
         transparent 180deg
       );
+      filter: blur(48px) brightness(1.2) saturate(1.2);
       top: -50%;
       left: 30%;
       animation: spotlightSway 15s ease-in-out infinite;
+      border: none;
     }
 
     .spotlight-2 {
@@ -531,14 +534,16 @@
       background: conic-gradient(
         from 90deg at 50% 0%,
         transparent 0deg,
-        rgba(192, 132, 252, 0.02) 50deg,
-        rgba(192, 132, 252, 0.06) 90deg,
-        rgba(192, 132, 252, 0.02) 130deg,
+        rgba(192, 132, 252, 0.08) 70deg,
+        rgba(192, 132, 252, 0.15) 100deg,
+        rgba(192, 132, 252, 0.08) 130deg,
         transparent 180deg
       );
+      filter: blur(44px) brightness(1.1) saturate(1.1);
       top: -40%;
       right: 20%;
       animation: spotlightSway 18s ease-in-out infinite reverse;
+      border: none;
     }
 
     @keyframes spotlightSway {
