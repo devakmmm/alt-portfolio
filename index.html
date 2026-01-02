@@ -4,60 +4,128 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Devak Mehta - Software Engineer</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg-primary: #0a0a0f;
-      --bg-secondary: #13131a;
-      --bg-card: #1a1a24;
+      --bg-primary: #030303;
+      --bg-secondary: #0a0a0a;
+      --bg-card: rgba(255, 255, 255, 0.03);
       --text-primary: #ffffff;
-      --text-secondary: #a8a8b3;
-      --accent: #00ffa3;
-      --accent-glow: rgba(0, 255, 163, 0.2);
-      --purple: #a78bfa;
-      --blue: #60a5fa;
+      --text-secondary: #888;
+      --accent: #00ff88;
+      --accent-glow: rgba(0, 255, 136, 0.15);
+      --purple: #a855f7;
+      --purple-glow: rgba(168, 85, 247, 0.2);
+      --blue: #3b82f6;
+      --pink: #ec4899;
+      --cyan: #06b6d4;
     }
 
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg-primary);
       color: var(--text-primary);
       overflow-x: hidden;
+      line-height: 1.6;
     }
 
-    /* Animated Grid Background */
-    .grid-bg {
+    /* Ambient Background */
+    .ambient-bg {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background-image:
-        linear-gradient(rgba(0, 255, 163, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 255, 163, 0.03) 1px, transparent 1px);
-      background-size: 50px 50px;
       z-index: 0;
-      animation: gridMove 20s linear infinite;
+      overflow: hidden;
+      pointer-events: none;
     }
 
-    @keyframes gridMove {
-      0% { transform: translate(0, 0); }
-      100% { transform: translate(50px, 50px); }
+    .glow-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.5;
+      animation: float 20s ease-in-out infinite;
     }
 
-    /* Spotlight Effect */
-    .spotlight {
-      position: fixed;
+    .glow-orb.green {
       width: 600px;
       height: 600px;
-      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-      pointer-events: none;
+      background: radial-gradient(circle, rgba(0, 255, 136, 0.3) 0%, transparent 70%);
+      top: -200px;
+      left: -200px;
+    }
+
+    .glow-orb.purple {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.25) 0%, transparent 70%);
+      top: 50%;
+      right: -150px;
+      animation-delay: -10s;
+    }
+
+    .glow-orb.blue {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%);
+      bottom: -100px;
+      left: 30%;
+      animation-delay: -5s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(50px, -30px) scale(1.1); }
+      50% { transform: translate(-30px, 50px) scale(0.95); }
+      75% { transform: translate(40px, 20px) scale(1.05); }
+    }
+
+    /* Grid Pattern */
+    .grid-pattern {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
       z-index: 1;
-      transition: transform 0.12s ease;
-      transform: translate(-9999px, -9999px);
+      pointer-events: none;
+    }
+
+    /* Starfield */
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: twinkle 3s ease-in-out infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.8; }
     }
 
     /* Navigation */
@@ -65,10 +133,11 @@
       position: fixed;
       top: 0;
       width: 100%;
-      padding: 20px 0;
-      background: rgba(10, 10, 15, 0.8);
+      padding: 16px 0;
+      background: rgba(3, 3, 3, 0.8);
       backdrop-filter: blur(20px);
-      z-index: 100;
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 1000;
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
@@ -82,303 +151,521 @@
     }
 
     .logo {
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 800;
-      background: linear-gradient(135deg, var(--accent), var(--blue));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      position: relative;
-      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--accent), var(--cyan));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 900;
     }
 
     .nav-links {
       display: flex;
-      gap: 40px;
+      gap: 32px;
       list-style: none;
-      position: relative;
-      z-index: 2;
+      align-items: center;
     }
 
     .nav-links a {
       color: var(--text-secondary);
       text-decoration: none;
       font-weight: 500;
-      transition: color 0.3s;
+      font-size: 14px;
+      transition: all 0.3s;
       position: relative;
     }
 
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -5px;
-      left: 0;
-      width: 0;
-      height: 2px;
+    .nav-links a:hover { color: var(--text-primary); }
+
+    .nav-cta {
+      padding: 10px 20px;
       background: var(--accent);
-      transition: width 0.3s;
+      color: var(--bg-primary) !important;
+      border-radius: 8px;
+      font-weight: 600 !important;
+      transition: all 0.3s;
     }
 
-    .nav-links a:hover { color: var(--text-primary); }
-    .nav-links a:hover::after { width: 100%; }
+    .nav-cta:hover {
+      box-shadow: 0 0 30px var(--accent-glow);
+      transform: translateY(-2px);
+    }
+
+    /* Mobile Menu */
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-primary);
+      font-size: 24px;
+      cursor: pointer;
+    }
 
     /* Hero Section */
     .hero {
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       position: relative;
       z-index: 2;
-      padding: 100px 40px 60px;
+      padding: 120px 40px 60px;
+      text-align: center;
     }
-
-    /* Infinite Scroll Tech Stack */
-    .tech-marquee-section { margin: 80px 0 0; overflow: hidden; position: relative; }
-    .tech-marquee-wrapper { display: flex; width: 200%; animation: scroll 30s linear infinite; }
-    .tech-marquee { display: flex; gap: 20px; width: 100%; align-items: center; }
-
-    @keyframes scroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
-    .tech-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      padding: 16px 24px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      white-space: nowrap;
-      backdrop-filter: blur(10px);
-      transition: all 0.3s;
-      min-width: fit-content;
-    }
-    .tech-card:hover {
-      background: rgba(0, 255, 163, 0.1);
-      border-color: var(--accent);
-      transform: scale(1.05);
-    }
-    .tech-icon { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
-    .tech-name { font-weight: 600; color: var(--text-primary); font-size: 14px; }
-
-    .hero-content { max-width: 1200px; text-align: center; }
 
     .hero-badge {
-      display: inline-block;
-      padding: 8px 20px;
-      background: rgba(0, 255, 163, 0.1);
-      border: 1px solid rgba(0, 255, 163, 0.3);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: rgba(0, 255, 136, 0.1);
+      border: 1px solid rgba(0, 255, 136, 0.3);
       border-radius: 50px;
       color: var(--accent);
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 600;
-      margin-bottom: 30px;
+      margin-bottom: 32px;
       animation: fadeInUp 0.6s ease-out;
     }
 
+    .hero-badge::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+    }
+
     .hero-title {
-      font-size: clamp(3rem, 10vw, 7rem);
-      font-weight: 800;
-      line-height: 1.1;
-      margin-bottom: 20px;
-      background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 900;
+      line-height: 1.05;
+      margin-bottom: 24px;
       animation: fadeInUp 0.6s ease-out 0.1s both;
     }
 
-    .hero-subtitle {
-      font-size: clamp(1.2rem, 3vw, 2rem);
-      color: var(--text-secondary);
-      margin-bottom: 40px;
-      animation: fadeInUp 0.6s ease-out 0.2s both;
+    .hero-title .line1 { color: var(--text-primary); display: block; }
+    .hero-title .line2 {
+      display: block;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--cyan) 50%, var(--purple) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    .hero-description {
-      font-size: 1.1rem;
+    .hero-subtitle {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
       color: var(--text-secondary);
-      max-width: 700px;
-      margin: 0 auto 50px;
-      line-height: 1.8;
-      animation: fadeInUp 0.6s ease-out 0.3s both;
+      max-width: 600px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+      animation: fadeInUp 0.6s ease-out 0.2s both;
     }
 
     .hero-buttons {
       display: flex;
-      gap: 20px;
+      gap: 16px;
       justify-content: center;
       flex-wrap: wrap;
-      animation: fadeInUp 0.6s ease-out 0.4s both;
+      margin-bottom: 60px;
+      animation: fadeInUp 0.6s ease-out 0.3s both;
     }
 
     .btn {
-      padding: 16px 32px;
-      border-radius: 12px;
+      padding: 14px 28px;
+      border-radius: 10px;
       font-weight: 600;
+      font-size: 14px;
       text-decoration: none;
       transition: all 0.3s;
-      position: relative;
-      overflow: hidden;
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      border: none;
+      cursor: pointer;
     }
 
     .btn-primary {
       background: var(--accent);
       color: var(--bg-primary);
-      box-shadow: 0 0 30px var(--accent-glow);
     }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 40px var(--accent-glow); }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 40px var(--accent-glow);
+    }
 
     .btn-secondary {
-      background: transparent;
+      background: rgba(255, 255, 255, 0.05);
       color: var(--text-primary);
-      border: 2px solid rgba(255, 255, 255, 0.1);
-    }
-    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
-
-    /* Floating Stats */
-    .floating-stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 20px;
-      max-width: 800px;
-      margin: 60px auto 0;
-      animation: fadeInUp 0.6s ease-out 0.5s both;
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .stat-box {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 16px;
-      padding: 24px;
-      text-align: center;
-      backdrop-filter: blur(10px);
-      transition: all 0.3s;
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
     }
-    .stat-box:hover {
-      background: rgba(0, 255, 163, 0.05);
-      border-color: var(--accent);
-      transform: translateY(-5px);
+
+    .btn-icon {
+      background: transparent;
+      color: var(--text-secondary);
+      padding: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
-    .stat-number { font-size: 2.5rem; font-weight: 800; color: var(--accent); display: block; margin-bottom: 8px; }
-    .stat-label { font-size: 0.9rem; color: var(--text-secondary); }
+
+    .btn-icon:hover {
+      color: var(--text-primary);
+      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* Stats Row */
+    .stats-row {
+      display: flex;
+      gap: 48px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.6s ease-out 0.4s both;
+    }
+
+    .stat-item { text-align: center; }
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      display: block;
+    }
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
     /* Section Styles */
-    .section { padding: 100px 40px; position: relative; z-index: 2; }
+    .section {
+      padding: 120px 40px;
+      position: relative;
+      z-index: 2;
+    }
+
     .container { max-width: 1400px; margin: 0 auto; }
-    .section-header { text-align: center; margin-bottom: 80px; }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
 
     .section-badge {
-      display: inline-block;
-      padding: 6px 16px;
-      background: rgba(167, 139, 250, 0.1);
-      border: 1px solid rgba(167, 139, 250, 0.3);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: rgba(168, 85, 247, 0.1);
+      border: 1px solid rgba(168, 85, 247, 0.3);
       border-radius: 50px;
       color: var(--purple);
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 800;
       margin-bottom: 16px;
     }
 
-    .section-title { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin-bottom: 20px; }
-    .section-subtitle { font-size: 1.2rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
+    .section-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 500px;
+      margin: 0 auto;
+    }
 
-    /* Featured Projects - Bento Grid */
-    .bento-grid {
+    /* 3D Project Gallery */
+    .projects-showcase {
+      position: relative;
+      padding: 60px 0;
+      overflow: hidden;
+    }
+
+    .projects-track {
+      display: flex;
+      gap: 30px;
+      padding: 40px 0;
+      animation: scrollProjects 40s linear infinite;
+    }
+
+    .projects-track:hover { animation-play-state: paused; }
+
+    @keyframes scrollProjects {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .project-card {
+      flex-shrink: 0;
+      width: 380px;
+      background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+
+    .project-card:hover {
+      transform: translateY(-12px) rotateX(2deg);
+      border-color: rgba(0, 255, 136, 0.3);
+      box-shadow: 
+        0 30px 60px rgba(0, 0, 0, 0.4),
+        0 0 40px var(--accent-glow);
+    }
+
+    .project-image {
+      width: 100%;
+      height: 220px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .project-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+
+    .project-card:hover .project-image img {
+      transform: scale(1.05);
+    }
+
+    .project-image-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%);
+    }
+
+    .project-content {
+      padding: 24px;
+    }
+
+    .project-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      background: rgba(0, 255, 136, 0.1);
+      border: 1px solid rgba(0, 255, 136, 0.3);
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .project-badge.purple {
+      background: rgba(168, 85, 247, 0.1);
+      border-color: rgba(168, 85, 247, 0.3);
+      color: var(--purple);
+    }
+
+    .project-badge.pink {
+      background: rgba(236, 72, 153, 0.1);
+      border-color: rgba(236, 72, 153, 0.3);
+      color: var(--pink);
+    }
+
+    .project-badge.cyan {
+      background: rgba(6, 182, 212, 0.1);
+      border-color: rgba(6, 182, 212, 0.3);
+      color: var(--cyan);
+    }
+
+    .project-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .project-description {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .project-tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .tech-pill {
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      font-size: 11px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 12px;
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .project-link:hover {
+      background: var(--accent);
+      color: var(--bg-primary);
+      border-color: var(--accent);
+    }
+
+    .project-link.secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-primary);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Featured Project Cards - Static Grid */
+    .featured-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
       gap: 24px;
-      margin-bottom: 40px;
+      margin-top: 60px;
     }
 
-    .bento-item {
-      background: var(--bg-card);
-      border: 1px solid rgba(255, 255, 255, 0.05);
+    .featured-card {
+      background: linear-gradient(145deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 24px;
       padding: 32px;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
       position: relative;
       overflow: hidden;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .bento-item::before {
+    .featured-card::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--accent), var(--blue));
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--purple));
       transform: scaleX(0);
       transition: transform 0.4s;
     }
 
-    .bento-item:hover::before { transform: scaleX(1); }
+    .featured-card:hover::before { transform: scaleX(1); }
 
-    .bento-item:hover {
+    .featured-card:hover {
       transform: translateY(-8px);
-      border-color: rgba(0, 255, 163, 0.3);
-      box-shadow: 0 20px 60px rgba(0, 255, 163, 0.1);
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
     }
 
-    .bento-item.large { grid-column: span 2; }
-
-    .project-icon {
-      width: 50px;
-      height: 50px;
-      background: linear-gradient(135deg, var(--accent), var(--blue));
-      border-radius: 12px;
+    .featured-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 20px;
       font-size: 24px;
+      margin-bottom: 20px;
     }
 
-    .project-status {
-      display: inline-block;
-      padding: 4px 12px;
-      background: rgba(0, 255, 163, 0.1);
-      border: 1px solid var(--accent);
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--accent);
-      text-transform: uppercase;
-      margin-bottom: 16px;
-    }
-
-    .project-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 12px; color: var(--text-primary); }
-    .project-description { color: var(--text-secondary); line-height: 1.7; margin-bottom: 20px; }
-
-    .project-tech { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
-    .tech-tag { padding: 6px 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; font-size: 12px; color: var(--text-secondary); font-weight: 500; }
-
-    .project-links { display: flex; gap: 16px; margin-top: auto; }
-    .project-link { color: var(--accent); text-decoration: none; font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 6px; transition: all 0.3s; }
-    .project-link:hover { gap: 10px; }
+    .featured-icon.green { background: linear-gradient(135deg, var(--accent), var(--cyan)); }
+    .featured-icon.purple { background: linear-gradient(135deg, var(--purple), var(--pink)); }
+    .featured-icon.blue { background: linear-gradient(135deg, var(--blue), var(--cyan)); }
 
     /* Experience Timeline */
-    .timeline { position: relative; max-width: 1000px; margin: 0 auto; }
-    .timeline::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: linear-gradient(180deg, var(--accent), var(--purple)); }
+    .timeline {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+    }
 
-    .timeline-item { display: flex; margin-bottom: 50px; position: relative; }
-    .timeline-item:nth-child(even) { flex-direction: row-reverse; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent), var(--purple), var(--blue));
+    }
+
+    .timeline-item {
+      display: flex;
+      margin-bottom: 60px;
+      position: relative;
+    }
+
+    .timeline-item:nth-child(odd) { justify-content: flex-start; }
+    .timeline-item:nth-child(even) { justify-content: flex-end; }
 
     .timeline-content {
-      width: calc(50% - 40px);
-      background: var(--bg-card);
-      padding: 30px;
+      width: calc(50% - 50px);
+      background: linear-gradient(145deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 28px;
       border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      position: relative;
       transition: all 0.3s;
     }
-    .timeline-content:hover { border-color: var(--accent); transform: scale(1.02); }
+
+    .timeline-content:hover {
+      border-color: rgba(0, 255, 136, 0.3);
+      transform: scale(1.02);
+    }
 
     .timeline-dot {
       position: absolute;
@@ -390,107 +677,218 @@
       border-radius: 50%;
       border: 4px solid var(--bg-primary);
       z-index: 10;
+      box-shadow: 0 0 20px var(--accent-glow);
     }
 
-    .timeline-date { color: var(--accent); font-weight: 600; font-size: 14px; margin-bottom: 8px; }
-    .timeline-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; }
-    .timeline-company { color: var(--purple); font-weight: 600; margin-bottom: 16px; }
+    .timeline-date {
+      display: inline-block;
+      padding: 4px 12px;
+      background: rgba(0, 255, 136, 0.1);
+      border-radius: 20px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
 
-    .timeline-description { color: var(--text-secondary); line-height: 1.7; }
-    .timeline-description li { margin-bottom: 10px; padding-left: 20px; position: relative; }
-    .timeline-description li::before { content: '▹'; position: absolute; left: 0; color: var(--accent); }
+    .timeline-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
 
-    /* Animations */
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
+    .timeline-company {
+      color: var(--purple);
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    .timeline-description {
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .timeline-description li {
+      margin-bottom: 8px;
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .timeline-description li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    /* Contact Section */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .contact-card {
+      background: linear-gradient(145deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 16px;
+      padding: 24px;
+      text-decoration: none;
+      color: var(--text-primary);
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .contact-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .contact-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      background: linear-gradient(135deg, var(--accent), var(--cyan));
+      color: var(--bg-primary);
+    }
+
+    .contact-info h4 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .contact-info p {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* Footer */
+    footer {
+      padding: 40px;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      position: relative;
+      z-index: 2;
+    }
+
+    footer p {
+      color: var(--text-secondary);
+      font-size: 14px;
     }
 
     /* Responsive */
     @media (max-width: 768px) {
       .nav-links { display: none; }
-      .bento-grid { grid-template-columns: 1fr; }
-      .bento-item.large { grid-column: span 1; }
+      .mobile-menu-btn { display: block; }
+      
+      .section { padding: 80px 20px; }
+      
+      .hero { padding: 100px 20px 60px; }
+      
+      .stats-row { gap: 24px; }
+      .stat-number { font-size: 1.5rem; }
+      
+      .project-card { width: 320px; }
+      
+      .featured-grid { grid-template-columns: 1fr; }
+      
       .timeline::before { left: 20px; }
-      .timeline-content { width: calc(100% - 60px); margin-left: 60px; }
-      .timeline-item:nth-child(even) .timeline-content { margin-left: 60px; }
+      .timeline-content { width: calc(100% - 50px); margin-left: 50px !important; }
+      .timeline-item:nth-child(even) { justify-content: flex-start; }
       .timeline-dot { left: 20px; }
-      .floating-stats { grid-template-columns: repeat(2, 1fr); }
+      
+      .contact-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 
 <body>
-  <div class="grid-bg"></div>
-  <div class="spotlight" id="spotlight"></div>
+  <!-- Ambient Background -->
+  <div class="ambient-bg">
+    <div class="glow-orb green"></div>
+    <div class="glow-orb purple"></div>
+    <div class="glow-orb blue"></div>
+  </div>
+  <div class="grid-pattern"></div>
+  
+  <!-- Stars -->
+  <div class="stars" id="stars"></div>
 
   <!-- Navigation -->
   <nav>
     <div class="nav-container">
-      <div class="logo">DM</div>
+      <a href="#" class="logo">
+        <div class="logo-icon">D</div>
+        <span>Devak</span>
+      </a>
       <ul class="nav-links">
         <li><a href="#home">Home</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#experience">Experience</a></li>
-        <li><a href="#skills">Skills</a></li>
         <li><a href="#contact">Contact</a></li>
+        <li><a href="mailto:mdevak44@gmail.com" class="nav-cta">Get in Touch</a></li>
       </ul>
+      <button class="mobile-menu-btn">
+        <i class="fas fa-bars"></i>
+      </button>
     </div>
   </nav>
 
   <!-- Hero Section -->
   <section id="home" class="hero">
-    <div class="hero-content">
-      <div class="hero-badge">Available for Full-Time • May 2026</div>
-      <h1 class="hero-title">Devak Mehta</h1>
-      <p class="hero-subtitle">Full-Stack Engineer & AI Developer</p>
-      <p class="hero-description">
-        Building scalable systems and intelligent applications. CS @ Queens College with 3+ years of
-        experience shipping production software across fintech, healthcare, and education.
-      </p>
+    <div class="hero-badge">Available for Full-Time • May 2026</div>
+    <h1 class="hero-title">
+      <span class="line1">Full-Stack Engineer</span>
+      <span class="line2">Who Ships.</span>
+    </h1>
+    <p class="hero-subtitle">
+      Building scalable systems and intelligent applications. CS @ Queens College 
+      with 3+ years shipping production software across fintech, healthcare, and education.
+    </p>
+    
+    <div class="hero-buttons">
+      <a href="#projects" class="btn btn-primary">
+        <i class="fas fa-rocket"></i> View Projects
+      </a>
+      <a href="https://drive.google.com/file/d/YOUR_RESUME_LINK" target="_blank" class="btn btn-secondary">
+        <i class="fas fa-file-alt"></i> Resume
+      </a>
+      <a href="https://github.com/devakmmm" target="_blank" class="btn btn-icon">
+        <i class="fab fa-github"></i>
+      </a>
+      <a href="http://www.linkedin.com/in/devak-mehta" target="_blank" class="btn btn-icon">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </div>
 
-      <div class="hero-buttons">
-        <a href="#projects" class="btn btn-primary">View Projects</a>
-        <a href="mailto:mdevak44@gmail.com" class="btn btn-secondary">Get in Touch</a>
-        <a href="https://github.com/devakmmm" target="_blank" class="btn btn-secondary">
-          <i class="fab fa-github"></i> GitHub
-        </a>
-        <a href="http://www.linkedin.com/in/devak-mehta" target="_blank" class="btn btn-secondary">
-          <i class="fab fa-linkedin"></i> LinkedIn
-        </a>
+    <div class="stats-row">
+      <div class="stat-item">
+        <span class="stat-number">15+</span>
+        <span class="stat-label">Apps Deployed</span>
       </div>
-
-      <div class="floating-stats">
-        <div class="stat-box"><span class="stat-number">15+</span><span class="stat-label">Apps Deployed</span></div>
-        <div class="stat-box"><span class="stat-number">3+</span><span class="stat-label">Years Experience</span></div>
-        <div class="stat-box"><span class="stat-number">2.5K+</span><span class="stat-label">Users Served</span></div>
-        <div class="stat-box"><span class="stat-number">95%</span><span class="stat-label">System Uptime</span></div>
+      <div class="stat-item">
+        <span class="stat-number">3+</span>
+        <span class="stat-label">Years Experience</span>
       </div>
-
-      <!-- Infinite Tech Stack Marquee -->
-      <div class="tech-marquee-section">
-        <div class="tech-marquee-wrapper">
-          <div class="tech-marquee">
-            <div class="tech-card"><div class="tech-icon">⚛️</div><span class="tech-name">React</span></div>
-            <div class="tech-card"><div class="tech-icon">📗</div><span class="tech-name">Node.js</span></div>
-            <div class="tech-card"><div class="tech-icon">🐍</div><span class="tech-name">Python</span></div>
-            <div class="tech-card"><div class="tech-icon">🎯</div><span class="tech-name">TypeScript</span></div>
-            <div class="tech-card"><div class="tech-icon">🗄️</div><span class="tech-name">PostgreSQL</span></div>
-            <div class="tech-card"><div class="tech-icon">☁️</div><span class="tech-name">AWS</span></div>
-            <div class="tech-card"><div class="tech-icon">🐳</div><span class="tech-name">Docker</span></div>
-            <div class="tech-card"><div class="tech-icon">🍃</div><span class="tech-name">MongoDB</span></div>
-          </div>
-          <div class="tech-marquee">
-            <div class="tech-card"><div class="tech-icon">⚛️</div><span class="tech-name">React</span></div>
-            <div class="tech-card"><div class="tech-icon">📗</div><span class="tech-name">Node.js</span></div>
-            <div class="tech-card"><div class="tech-icon">🐍</div><span class="tech-name">Python</span></div>
-            <div class="tech-card"><div class="tech-icon">🎯</div><span class="tech-name">TypeScript</span></div>
-            <div class="tech-card"><div class="tech-icon">🗄️</div><span class="tech-name">PostgreSQL</span></div>
-            <div class="tech-card"><div class="tech-icon">☁️</div><span class="tech-name">AWS</span></div>
-            <div class="tech-card"><div class="tech-icon">🐳</div><span class="tech-name">Docker</span></div>
-            <div class="tech-card"><div class="tech-icon">🍃</div><span class="tech-name">MongoDB</span></div>
-          </div>
-        </div>
+      <div class="stat-item">
+        <span class="stat-number">2.5K+</span>
+        <span class="stat-label">Users Served</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">95%</span>
+        <span class="stat-label">System Uptime</span>
       </div>
     </div>
   </section>
@@ -499,49 +897,235 @@
   <section id="projects" class="section">
     <div class="container">
       <div class="section-header">
-        <div class="section-badge">Recent Work</div>
+        <div class="section-badge"><i class="fas fa-sparkles"></i> Recent Work</div>
         <h2 class="section-title">Featured Projects</h2>
         <p class="section-subtitle">Production applications solving real-world problems</p>
       </div>
 
-      <div class="bento-grid">
-        <!-- HiringRadar -->
-        <div class="bento-item large">
-          <div class="project-icon">📊</div>
-          <span class="project-status">Live</span>
-          <h3 class="project-title">HiringRadar</h3>
-          <p class="project-description">
-            Hiring intelligence dashboard with OAuth 2.0 authentication and real-time job market analytics.
-            Integrates USAJOBS API with intelligent caching and rate-limit handling to deliver hiring trends and benchmarks.
-          </p>
-          <div class="project-tech">
-            <span class="tech-tag">Node.js</span>
-            <span class="tech-tag">OAuth 2.0</span>
-            <span class="tech-tag">REST APIs</span>
-            <span class="tech-tag">USAJOBS API</span>
+      <!-- Scrolling Project Gallery -->
+      <div class="projects-showcase">
+        <div class="projects-track">
+          <!-- LeetSight -->
+          <div class="project-card">
+            <div class="project-image">
+              <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="LeetSight Dashboard" />
+              <div class="project-image-overlay"></div>
+            </div>
+            <div class="project-content">
+              <span class="project-badge"><i class="fas fa-bolt"></i> Live</span>
+              <h3 class="project-title">LeetSight</h3>
+              <p class="project-description">LeetCode analytics with AI-powered insights. Track readiness, velocity, and get topic recommendations.</p>
+              <div class="project-tech-stack">
+                <span class="tech-pill">React</span>
+                <span class="tech-pill">Node.js</span>
+                <span class="tech-pill">LeetCode API</span>
+                <span class="tech-pill">AI</span>
+              </div>
+              <div class="project-links">
+                <a href="https://leetsight.netlify.app/" target="_blank" class="project-link"><i class="fas fa-external-link-alt"></i> Live</a>
+                <a href="https://github.com/devakmmm" target="_blank" class="project-link secondary"><i class="fab fa-github"></i></a>
+              </div>
+            </div>
           </div>
-          <div class="project-links">
-            <a href="https://hiringradar.onrender.com/" target="_blank" class="project-link">View Live <i class="fas fa-arrow-right"></i></a>
-            <a href="https://github.com/devakmmm" target="_blank" class="project-link">GitHub <i class="fab fa-github"></i></a>
-          </div>
-        </div>
 
-        <!-- WebWidget -->
-        <div class="bento-item">
-          <div class="project-icon">🧩</div>
-          <span class="project-status">Live</span>
-          <h3 class="project-title">WebWidget</h3>
-          <p class="project-description">
-            Drop-in website widget. Add it to any site with one script tag (great for small businesses).
-          </p>
-          <div class="project-tech">
-            <span class="tech-tag">JavaScript</span>
-            <span class="tech-tag">Node.js</span>
-            <span class="tech-tag">Render</span>
+          <!-- Hiring Radar -->
+          <div class="project-card">
+            <div class="project-image">
+              <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80" alt="HiringRadar Dashboard" />
+              <div class="project-image-overlay"></div>
+            </div>
+            <div class="project-content">
+              <span class="project-badge purple"><i class="fas fa-chart-line"></i> Enterprise</span>
+              <h3 class="project-title">Hiring Radar</h3>
+              <p class="project-description">Enterprise-grade hiring analytics with OAuth 2.0 and real-time market data aggregation.</p>
+              <div class="project-tech-stack">
+                <span class="tech-pill">Node.js</span>
+                <span class="tech-pill">OAuth 2.0</span>
+                <span class="tech-pill">USAJOBS API</span>
+              </div>
+              <div class="project-links">
+                <a href="https://hiringradar.onrender.com/" target="_blank" class="project-link"><i class="fas fa-external-link-alt"></i> Live</a>
+                <a href="https://github.com/devakmmm" target="_blank" class="project-link secondary"><i class="fab fa-github"></i></a>
+              </div>
+            </div>
           </div>
-          <div class="project-links">
-            <a href="https://webwidget-2hpa.onrender.com/" target="_blank" class="project-link">Demo <i class="fas fa-arrow-right"></i></a>
-            <a href="https://github.com/devakmmm/WebWidget" target="_blank" class="project-link">GitHub <i class="fab fa-github"></i></a>
+
+          <!-- Document Classifier -->
+          <div class="project-card">
+            <div class="project-image">
+              <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&q=80" alt="Document Classifier" />
+              <div class="project-image-overlay"></div>
+            </div>
+            <div class="project-content">
+              <span class="project-badge pink"><i class="fas fa-brain"></i> AI/ML</span>
+              <h3 class="project-title">Document Classifier</h3>
+              <p class="project-description">AI-powered document classification using advanced machine learning algorithms.</p>
+              <div class="project-tech-stack">
+                <span class="tech-pill">Python</span>
+                <span class="tech-pill">TensorFlow</span>
+                <span class="tech-pill">Flask</span>
+              </div>
+              <div class="project-links">
+                <a href="https://document-classifier-api-1.onrender.com/" target="_blank" class="project-link"><i class="fas fa-external-link-alt"></i> Live</a>
+                <a href="https://github.com/devakmmm" target="_blank" class="project-link secondary"><i class="fab fa-github"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Movie Recs -->
+          <div class="project-card">
+            <div class="project-image">
+              <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800&q=80" alt="Movie Recommendations" />
+              <div class="project-image-overlay"></div>
+            </div>
+            <div class="project-content">
+              <span class="project-badge"><i class="fas fa-film"></i> Live</span>
+              <h3 class="project-title">Movie Recs Engine</h3>
+              <p class="project-description">AI-powered movie recommendations with GitHub OAuth and OMDb API integration.</p>
+              <div class="project-tech-stack">
+                <span class="tech-pill">Node.js</span>
+                <span class="tech-pill">OAuth 2.0</span>
+                <span class="tech-pill">OMDb API</span>
+              </div>
+              <div class="project-links">
+                <a href="https://movierecs.onrender.com/" target="_blank" class="project-link"><i class="fas fa-external-link-alt"></i> Live</a>
+                <a href="https://github.com/devakmmm" target="_blank" class="project-link secondary"><i class="fab fa-github"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- WebSocket Terminal -->
+          <div class="project-card">
+            <div class="project-image">
+              <img src="https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=800&q=80" alt="WebSocket Terminal" />
+              <div class="project-image-overlay"></div>
+            </div>
+            <div class="project-content">
+              <span class="project-badge cyan"><i class="fas fa-terminal"></i> Real-time</span>
+              <h3 class="project-title">WebSocket Terminal</h3>
+              <p class="project-description">Real-time bidirectional communication via WebSocket protocol with multi-node support.</p>
+              <div class="project-tech-stack">
+                <span class="tech-pill">WebSocket</span>
+                <span class="tech-pill">Node.js</span>
+                <span class="tech-pill">Real-time</span>
+              </div>
+              <div class="project-links">
+                <a href="https://websocket-chat-6h7v.onrender.com/" target="_blank" class="project-link"><i class="fas fa-external-link-alt"></i> Live</a>
+                <a href="https://github.com/devakmmm" target="_blank" class="project-link secondary"><i class="fab fa-github"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Duplicate cards for seamless loop -->
+          <!-- LeetSight -->
+          <div class="project-card">
+            <div class="project-image">
+              <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="LeetSight Dashboard" />
+              <div class="project-image-overlay"></div>
+            </div>
+            <div class="project-content">
+              <span class="project-badge"><i class="fas fa-bolt"></i> Live</span>
+              <h3 class="project-title">LeetSight</h3>
+              <p class="project-description">LeetCode analytics with AI-powered insights. Track readiness, velocity, and get topic recommendations.</p>
+              <div class="project-tech-stack">
+                <span class="tech-pill">React</span>
+                <span class="tech-pill">Node.js</span>
+                <span class="tech-pill">LeetCode API</span>
+                <span class="tech-pill">AI</span>
+              </div>
+              <div class="project-links">
+                <a href="https://leetsight.netlify.app/" target="_blank" class="project-link"><i class="fas fa-external-link-alt"></i> Live</a>
+                <a href="https://github.com/devakmmm" target="_blank" class="project-link secondary"><i class="fab fa-github"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hiring Radar -->
+          <div class="project-card">
+            <div class="project-image">
+              <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80" alt="HiringRadar Dashboard" />
+              <div class="project-image-overlay"></div>
+            </div>
+            <div class="project-content">
+              <span class="project-badge purple"><i class="fas fa-chart-line"></i> Enterprise</span>
+              <h3 class="project-title">Hiring Radar</h3>
+              <p class="project-description">Enterprise-grade hiring analytics with OAuth 2.0 and real-time market data aggregation.</p>
+              <div class="project-tech-stack">
+                <span class="tech-pill">Node.js</span>
+                <span class="tech-pill">OAuth 2.0</span>
+                <span class="tech-pill">USAJOBS API</span>
+              </div>
+              <div class="project-links">
+                <a href="https://hiringradar.onrender.com/" target="_blank" class="project-link"><i class="fas fa-external-link-alt"></i> Live</a>
+                <a href="https://github.com/devakmmm" target="_blank" class="project-link secondary"><i class="fab fa-github"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Document Classifier -->
+          <div class="project-card">
+            <div class="project-image">
+              <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&q=80" alt="Document Classifier" />
+              <div class="project-image-overlay"></div>
+            </div>
+            <div class="project-content">
+              <span class="project-badge pink"><i class="fas fa-brain"></i> AI/ML</span>
+              <h3 class="project-title">Document Classifier</h3>
+              <p class="project-description">AI-powered document classification using advanced machine learning algorithms.</p>
+              <div class="project-tech-stack">
+                <span class="tech-pill">Python</span>
+                <span class="tech-pill">TensorFlow</span>
+                <span class="tech-pill">Flask</span>
+              </div>
+              <div class="project-links">
+                <a href="https://document-classifier-api-1.onrender.com/" target="_blank" class="project-link"><i class="fas fa-external-link-alt"></i> Live</a>
+                <a href="https://github.com/devakmmm" target="_blank" class="project-link secondary"><i class="fab fa-github"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Movie Recs -->
+          <div class="project-card">
+            <div class="project-image">
+              <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800&q=80" alt="Movie Recommendations" />
+              <div class="project-image-overlay"></div>
+            </div>
+            <div class="project-content">
+              <span class="project-badge"><i class="fas fa-film"></i> Live</span>
+              <h3 class="project-title">Movie Recs Engine</h3>
+              <p class="project-description">AI-powered movie recommendations with GitHub OAuth and OMDb API integration.</p>
+              <div class="project-tech-stack">
+                <span class="tech-pill">Node.js</span>
+                <span class="tech-pill">OAuth 2.0</span>
+                <span class="tech-pill">OMDb API</span>
+              </div>
+              <div class="project-links">
+                <a href="https://movierecs.onrender.com/" target="_blank" class="project-link"><i class="fas fa-external-link-alt"></i> Live</a>
+                <a href="https://github.com/devakmmm" target="_blank" class="project-link secondary"><i class="fab fa-github"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- WebSocket Terminal -->
+          <div class="project-card">
+            <div class="project-image">
+              <img src="https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=800&q=80" alt="WebSocket Terminal" />
+              <div class="project-image-overlay"></div>
+            </div>
+            <div class="project-content">
+              <span class="project-badge cyan"><i class="fas fa-terminal"></i> Real-time</span>
+              <h3 class="project-title">WebSocket Terminal</h3>
+              <p class="project-description">Real-time bidirectional communication via WebSocket protocol with multi-node support.</p>
+              <div class="project-tech-stack">
+                <span class="tech-pill">WebSocket</span>
+                <span class="tech-pill">Node.js</span>
+                <span class="tech-pill">Real-time</span>
+              </div>
+              <div class="project-links">
+                <a href="https://websocket-chat-6h7v.onrender.com/" target="_blank" class="project-link"><i class="fas fa-external-link-alt"></i> Live</a>
+                <a href="https://github.com/devakmmm" target="_blank" class="project-link secondary"><i class="fab fa-github"></i></a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -552,22 +1136,22 @@
   <section id="experience" class="section">
     <div class="container">
       <div class="section-header">
-        <div class="section-badge">Career Journey</div>
+        <div class="section-badge"><i class="fas fa-briefcase"></i> Career Journey</div>
         <h2 class="section-title">Experience</h2>
-        <p class="section-subtitle">Building impactful systems across education, fintech, and health-tech</p>
+        <p class="section-subtitle">Building impactful systems across industries</p>
       </div>
 
       <div class="timeline">
         <div class="timeline-item">
           <div class="timeline-dot"></div>
           <div class="timeline-content">
-            <div class="timeline-date">Jan 2024 - Jan 2025</div>
+            <span class="timeline-date">Jan 2024 - Jan 2025</span>
             <h3 class="timeline-title">Software Engineer</h3>
             <div class="timeline-company">International Health School for Health and Sciences</div>
             <ul class="timeline-description">
-              <li>Developed web-based grading automation tool using Python, React, and PostgreSQL, reducing manual grading time by 40% for instructors across 5+ courses</li>
-              <li>Built and deployed REST APIs using Node.js and Express to handle student submissions and feedback delivery, supporting 150+ active student users</li>
-              <li>Collaborated with 4-person development team using Git and GitHub to implement new features, resolve bugs, and improve UI responsiveness across desktop and mobile devices</li>
+              <li>Developed web-based grading automation tool using Python, React, and PostgreSQL, reducing manual grading time by 40%</li>
+              <li>Built and deployed REST APIs using Node.js and Express supporting 150+ active users</li>
+              <li>Collaborated with 4-person team using Git and GitHub to implement features and improve UI responsiveness</li>
             </ul>
           </div>
         </div>
@@ -575,13 +1159,13 @@
         <div class="timeline-item">
           <div class="timeline-dot"></div>
           <div class="timeline-content">
-            <div class="timeline-date">Feb 2023 - Jul 2024</div>
+            <span class="timeline-date">Feb 2023 - Jul 2024</span>
             <h3 class="timeline-title">Software Engineering Intern</h3>
             <div class="timeline-company">Mehta Papers</div>
             <ul class="timeline-description">
-              <li>Automated internal document workflows using Python scripts and OCR tools, reducing document processing time by 45%</li>
-              <li>Implemented machine learning text classification model using TensorFlow to tag and organize scanned documents with over 85% accuracy</li>
-              <li>Assisted in database design and API development using PostgreSQL and Flask, supporting search and retrieval for 2,000+ archived files</li>
+              <li>Automated internal document workflows using Python and OCR, reducing processing time by 45%</li>
+              <li>Implemented ML text classification using TensorFlow with 85%+ accuracy</li>
+              <li>Designed database and API with PostgreSQL and Flask for 2,000+ archived files</li>
             </ul>
           </div>
         </div>
@@ -589,13 +1173,13 @@
         <div class="timeline-item">
           <div class="timeline-dot"></div>
           <div class="timeline-content">
-            <div class="timeline-date">Aug 2022 - Oct 2023</div>
+            <span class="timeline-date">Aug 2022 - Oct 2023</span>
             <h3 class="timeline-title">Junior Full-Stack Developer</h3>
             <div class="timeline-company">MNC Development</div>
             <ul class="timeline-description">
-              <li>Developed full-stack web features using React, Node.js, Express, and PostgreSQL for client websites serving 3,000+ monthly users</li>
-              <li>Integrated third-party APIs and authentication systems to support secure user login and form submissions across 6 client projects</li>
-              <li>Worked in an Agile environment to deliver weekly feature updates, participate in sprint planning, and perform peer code reviews using GitHub</li>
+              <li>Developed full-stack features using React, Node.js, Express, and PostgreSQL for 3,000+ monthly users</li>
+              <li>Integrated third-party APIs and auth systems across 6 client projects</li>
+              <li>Delivered weekly feature updates in Agile environment with peer code reviews</li>
             </ul>
           </div>
         </div>
@@ -603,7 +1187,73 @@
     </div>
   </section>
 
-  <!-- ✅ WebWidget embed (correct place: right before closing </body>) -->
+  <!-- Contact Section -->
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge"><i class="fas fa-envelope"></i> Get in Touch</div>
+        <h2 class="section-title">Let's Connect</h2>
+        <p class="section-subtitle">Open for opportunities starting May 2026</p>
+      </div>
+
+      <div class="contact-grid">
+        <a href="mailto:mdevak44@gmail.com" class="contact-card">
+          <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+          <div class="contact-info">
+            <h4>Email</h4>
+            <p>mdevak44@gmail.com</p>
+          </div>
+        </a>
+        <a href="https://github.com/devakmmm" target="_blank" class="contact-card">
+          <div class="contact-icon"><i class="fab fa-github"></i></div>
+          <div class="contact-info">
+            <h4>GitHub</h4>
+            <p>@devakmmm</p>
+          </div>
+        </a>
+        <a href="http://www.linkedin.com/in/devak-mehta" target="_blank" class="contact-card">
+          <div class="contact-icon"><i class="fab fa-linkedin"></i></div>
+          <div class="contact-info">
+            <h4>LinkedIn</h4>
+            <p>Devak Mehta</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2026 Devak Mehta. Built with passion.</p>
+  </footer>
+
+  <!-- Generate Stars -->
+  <script>
+    // Generate random stars
+    const starsContainer = document.getElementById('stars');
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.animationDelay = Math.random() * 3 + 's';
+      star.style.opacity = Math.random() * 0.5 + 0.2;
+      starsContainer.appendChild(star);
+    }
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+
+  <!-- WebWidget embed -->
   <script
     src="https://webwidget-2hpa.onrender.com/widget.js"
     data-site="devak-portfolio"
