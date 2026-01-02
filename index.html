@@ -450,262 +450,152 @@
       margin-top: 4px;
     }
 
-    /* Hero Laptop Mockup */
-    .hero-laptop-container {
-      position: relative;
-      width: 100%;
-      max-width: 900px;
-      margin: 80px auto 0;
-      perspective: 1500px;
-      animation: fadeInUp 0.8s ease-out 0.5s both;
+    /* Background Laptop Silhouette with Light Beam */
+    .bg-laptop-container {
+      position: fixed;
+      bottom: -5%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 500px;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.6;
     }
 
-    .laptop-glow-beam {
+    /* Light beam emanating from laptop screen */
+    .bg-laptop-beam {
       position: absolute;
-      top: -300px;
+      bottom: 180px;
       left: 50%;
       transform: translateX(-50%);
       width: 100%;
-      height: 500px;
+      height: 800px;
       background: conic-gradient(
         from 180deg at 50% 100%,
-        transparent 30%,
-        rgba(0, 255, 136, 0.02) 38%,
-        rgba(0, 255, 136, 0.06) 45%,
-        rgba(6, 182, 212, 0.08) 50%,
-        rgba(0, 255, 136, 0.06) 55%,
-        rgba(0, 255, 136, 0.02) 62%,
-        transparent 70%
+        transparent 25%,
+        rgba(0, 255, 136, 0.01) 35%,
+        rgba(0, 255, 136, 0.04) 42%,
+        rgba(6, 182, 212, 0.08) 48%,
+        rgba(0, 255, 136, 0.12) 50%,
+        rgba(6, 182, 212, 0.08) 52%,
+        rgba(0, 255, 136, 0.04) 58%,
+        rgba(0, 255, 136, 0.01) 65%,
+        transparent 75%
       );
-      pointer-events: none;
-      animation: beamGlow 4s ease-in-out infinite;
+      animation: bgBeamPulse 6s ease-in-out infinite;
     }
 
-    @keyframes beamGlow {
-      0%, 100% { opacity: 0.8; }
-      50% { opacity: 1; }
+    @keyframes bgBeamPulse {
+      0%, 100% { opacity: 0.7; transform: translateX(-50%) scaleX(1); }
+      50% { opacity: 1; transform: translateX(-50%) scaleX(1.1); }
     }
 
-    .laptop {
-      position: relative;
-      transform: rotateX(15deg);
-      transform-style: preserve-3d;
+    /* Secondary inner beam for depth */
+    .bg-laptop-beam-inner {
+      position: absolute;
+      bottom: 180px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 600px;
+      background: conic-gradient(
+        from 180deg at 50% 100%,
+        transparent 35%,
+        rgba(0, 255, 136, 0.06) 45%,
+        rgba(6, 182, 212, 0.12) 50%,
+        rgba(0, 255, 136, 0.06) 55%,
+        transparent 65%
+      );
+      animation: bgBeamPulse 6s ease-in-out infinite 0.5s;
     }
 
-    .laptop-screen {
-      position: relative;
-      background: linear-gradient(135deg, #1a1a2e 0%, #0d0d15 100%);
-      border-radius: 16px 16px 0 0;
-      padding: 12px 12px 0 12px;
-      border: 2px solid rgba(255, 255, 255, 0.1);
-      border-bottom: none;
+    /* Laptop screen silhouette */
+    .bg-laptop-screen {
+      position: absolute;
+      bottom: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 400px;
+      height: 250px;
+      background: linear-gradient(180deg, 
+        rgba(10, 10, 15, 0.95) 0%, 
+        rgba(5, 5, 8, 0.98) 100%
+      );
+      border-radius: 12px 12px 0 0;
+      border: 1px solid rgba(255, 255, 255, 0.05);
       box-shadow: 
-        0 -20px 60px rgba(0, 255, 136, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        0 0 80px rgba(0, 255, 136, 0.15),
+        0 0 120px rgba(6, 182, 212, 0.1),
+        inset 0 0 60px rgba(0, 255, 136, 0.05);
     }
 
-    .screen-content {
-      position: relative;
-      background: linear-gradient(180deg, #0a0a12 0%, #050508 100%);
-      border-radius: 8px 8px 0 0;
-      padding: 20px;
-      min-height: 280px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Screen inner glow */
-    .screen-content::before {
+    /* Screen glow effect */
+    .bg-laptop-screen::before {
       content: '';
       position: absolute;
-      top: 0;
+      top: 10%;
       left: 50%;
       transform: translateX(-50%);
       width: 80%;
-      height: 100%;
-      background: radial-gradient(ellipse at top, rgba(0, 255, 136, 0.1) 0%, transparent 60%);
-      pointer-events: none;
+      height: 60%;
+      background: radial-gradient(
+        ellipse at center,
+        rgba(0, 255, 136, 0.08) 0%,
+        rgba(6, 182, 212, 0.04) 40%,
+        transparent 70%
+      );
+      filter: blur(20px);
     }
 
-    /* Fake UI Elements */
-    .fake-ui {
-      position: relative;
-      z-index: 1;
-    }
-
-    .fake-topbar {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 16px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .fake-dots {
-      display: flex;
-      gap: 6px;
-    }
-
-    .fake-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-    }
-
-    .fake-dot.red { background: #ff5f57; }
-    .fake-dot.yellow { background: #ffbd2e; }
-    .fake-dot.green { background: #28c840; }
-
-    .fake-url {
-      flex: 1;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 6px;
-      padding: 6px 12px;
-      font-size: 11px;
-      color: var(--text-secondary);
-      font-family: 'SF Mono', Monaco, monospace;
-    }
-
-    .fake-content {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 16px;
-      flex: 1;
-    }
-
-    .fake-sidebar {
-      background: rgba(255, 255, 255, 0.02);
-      border-radius: 8px;
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .fake-nav-item {
-      height: 8px;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 4px;
-    }
-
-    .fake-nav-item.active {
-      background: linear-gradient(90deg, var(--accent), var(--cyan));
-      box-shadow: 0 0 10px var(--accent-glow);
-    }
-
-    .fake-main {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .fake-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 8px;
-      padding: 12px;
-      flex: 1;
-    }
-
-    .fake-chart {
-      display: flex;
-      align-items: flex-end;
-      gap: 6px;
-      height: 60px;
-      padding-top: 10px;
-    }
-
-    .fake-bar {
-      flex: 1;
-      background: linear-gradient(to top, var(--accent), var(--cyan));
-      border-radius: 3px 3px 0 0;
-      opacity: 0.7;
-      animation: barGrow 2s ease-out infinite;
-    }
-
-    .fake-bar:nth-child(1) { height: 40%; animation-delay: 0s; }
-    .fake-bar:nth-child(2) { height: 70%; animation-delay: 0.1s; }
-    .fake-bar:nth-child(3) { height: 50%; animation-delay: 0.2s; }
-    .fake-bar:nth-child(4) { height: 90%; animation-delay: 0.3s; }
-    .fake-bar:nth-child(5) { height: 60%; animation-delay: 0.4s; }
-    .fake-bar:nth-child(6) { height: 80%; animation-delay: 0.5s; }
-    .fake-bar:nth-child(7) { height: 45%; animation-delay: 0.6s; }
-    .fake-bar:nth-child(8) { height: 75%; animation-delay: 0.7s; }
-
-    @keyframes barGrow {
-      0%, 100% { transform: scaleY(1); }
-      50% { transform: scaleY(0.8); }
-    }
-
-    .fake-stats {
-      display: flex;
-      gap: 10px;
-    }
-
-    .fake-stat-box {
-      flex: 1;
-      background: rgba(255, 255, 255, 0.02);
-      border-radius: 6px;
-      padding: 10px;
-      text-align: center;
-    }
-
-    .fake-stat-number {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--accent);
-      display: block;
-    }
-
-    .fake-stat-label {
-      font-size: 9px;
-      color: var(--text-secondary);
-      margin-top: 2px;
-    }
-
-    .laptop-base {
-      background: linear-gradient(180deg, #2a2a3a 0%, #1a1a28 100%);
-      height: 18px;
-      border-radius: 0 0 12px 12px;
-      position: relative;
-      border: 2px solid rgba(255, 255, 255, 0.08);
+    /* Laptop base */
+    .bg-laptop-base {
+      position: absolute;
+      bottom: 45px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 440px;
+      height: 15px;
+      background: linear-gradient(180deg, 
+        rgba(30, 30, 40, 0.9) 0%, 
+        rgba(15, 15, 20, 0.95) 100%
+      );
+      border-radius: 0 0 8px 8px;
+      border: 1px solid rgba(255, 255, 255, 0.03);
       border-top: none;
     }
 
-    .laptop-base::before {
-      content: '';
+    /* Keyboard/trackpad area perspective */
+    .bg-laptop-keyboard {
       position: absolute;
-      top: 4px;
+      bottom: 0;
       left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 6px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 3px;
+      transform: translateX(-50%) perspective(500px) rotateX(60deg);
+      width: 500px;
+      height: 80px;
+      background: linear-gradient(180deg, 
+        rgba(20, 20, 28, 0.8) 0%, 
+        rgba(10, 10, 15, 0.9) 100%
+      );
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.02);
     }
 
-    .laptop-keyboard {
-      background: linear-gradient(180deg, #1e1e2a 0%, #15151f 100%);
-      height: 12px;
-      margin: 0 30px;
-      border-radius: 0 0 6px 6px;
-      transform: rotateX(-80deg) translateZ(-5px);
-      transform-origin: top;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    /* Reflection/Shadow under laptop */
-    .laptop-shadow {
+    /* Reflection under laptop */
+    .bg-laptop-reflection {
       position: absolute;
-      bottom: -40px;
+      bottom: -20px;
       left: 50%;
       transform: translateX(-50%);
-      width: 70%;
-      height: 40px;
-      background: radial-gradient(ellipse, rgba(0, 255, 136, 0.15) 0%, transparent 70%);
-      filter: blur(20px);
+      width: 500px;
+      height: 60px;
+      background: radial-gradient(
+        ellipse at center,
+        rgba(0, 255, 136, 0.12) 0%,
+        rgba(6, 182, 212, 0.06) 40%,
+        transparent 70%
+      );
+      filter: blur(30px);
     }
 
     @keyframes fadeInUp {
@@ -1147,35 +1037,29 @@
       .stats-row { gap: 24px; }
       .stat-number { font-size: 1.5rem; }
       
-      .hero-laptop-container {
-        margin-top: 40px;
-        max-width: 100%;
+      .bg-laptop-container {
+        width: 500px;
+        bottom: -10%;
+        opacity: 0.4;
       }
       
-      .laptop {
-        transform: rotateX(10deg);
+      .bg-laptop-screen {
+        width: 280px;
+        height: 180px;
       }
       
-      .screen-content {
-        min-height: 180px;
-        padding: 12px;
+      .bg-laptop-base {
+        width: 300px;
       }
       
-      .fake-content {
-        grid-template-columns: 1fr;
+      .bg-laptop-keyboard {
+        width: 340px;
+        height: 60px;
       }
       
-      .fake-sidebar {
-        display: none;
-      }
-      
-      .fake-chart {
-        height: 40px;
-      }
-      
-      .laptop-glow-beam {
-        height: 300px;
-        top: -200px;
+      .bg-laptop-beam,
+      .bg-laptop-beam-inner {
+        height: 500px;
       }
       
       .project-card { width: 320px; }
@@ -1213,6 +1097,16 @@
   
   <!-- Particles -->
   <div class="particles" id="particles"></div>
+
+  <!-- Background Laptop with Light Beam -->
+  <div class="bg-laptop-container">
+    <div class="bg-laptop-beam"></div>
+    <div class="bg-laptop-beam-inner"></div>
+    <div class="bg-laptop-screen"></div>
+    <div class="bg-laptop-base"></div>
+    <div class="bg-laptop-keyboard"></div>
+    <div class="bg-laptop-reflection"></div>
+  </div>
 
   <!-- Navigation -->
   <nav>
@@ -1278,67 +1172,6 @@
         <span class="stat-number">95%</span>
         <span class="stat-label">System Uptime</span>
       </div>
-    </div>
-
-    <!-- Hero Laptop with Light Beam -->
-    <div class="hero-laptop-container">
-      <div class="laptop-glow-beam"></div>
-      <div class="laptop">
-        <div class="laptop-screen">
-          <div class="screen-content">
-            <div class="fake-ui">
-              <div class="fake-topbar">
-                <div class="fake-dots">
-                  <div class="fake-dot red"></div>
-                  <div class="fake-dot yellow"></div>
-                  <div class="fake-dot green"></div>
-                </div>
-                <div class="fake-url">devak-portfolio.dev</div>
-              </div>
-              <div class="fake-content">
-                <div class="fake-sidebar">
-                  <div class="fake-nav-item active"></div>
-                  <div class="fake-nav-item"></div>
-                  <div class="fake-nav-item"></div>
-                  <div class="fake-nav-item"></div>
-                  <div class="fake-nav-item"></div>
-                </div>
-                <div class="fake-main">
-                  <div class="fake-card">
-                    <div class="fake-chart">
-                      <div class="fake-bar"></div>
-                      <div class="fake-bar"></div>
-                      <div class="fake-bar"></div>
-                      <div class="fake-bar"></div>
-                      <div class="fake-bar"></div>
-                      <div class="fake-bar"></div>
-                      <div class="fake-bar"></div>
-                      <div class="fake-bar"></div>
-                    </div>
-                  </div>
-                  <div class="fake-stats">
-                    <div class="fake-stat-box">
-                      <span class="fake-stat-number">2.5K</span>
-                      <span class="fake-stat-label">Users</span>
-                    </div>
-                    <div class="fake-stat-box">
-                      <span class="fake-stat-number">15+</span>
-                      <span class="fake-stat-label">Projects</span>
-                    </div>
-                    <div class="fake-stat-box">
-                      <span class="fake-stat-number">99%</span>
-                      <span class="fake-stat-label">Uptime</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="laptop-base"></div>
-        <div class="laptop-keyboard"></div>
-      </div>
-      <div class="laptop-shadow"></div>
     </div>
   </section>
 
