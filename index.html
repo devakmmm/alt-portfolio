@@ -453,59 +453,60 @@
     /* Background Laptop Silhouette with Light Beam */
     .bg-laptop-container {
       position: fixed;
-      bottom: -5%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 800px;
-      height: 500px;
+      bottom: -15%;
+      left: -5%;
+      transform: perspective(1500px) rotateY(25deg) rotateX(10deg);
+      width: 1100px;
+      height: 700px;
       z-index: 0;
       pointer-events: none;
-      opacity: 0.6;
+      opacity: 0.7;
+      transform-style: preserve-3d;
     }
 
-    /* Light beam emanating from laptop screen */
+    /* Light beam emanating from laptop screen - dramatic upward beam */
     .bg-laptop-beam {
       position: absolute;
-      bottom: 180px;
+      bottom: 250px;
       left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      height: 800px;
+      transform: translateX(-50%) rotateY(-25deg);
+      width: 120%;
+      height: 1200px;
       background: conic-gradient(
         from 180deg at 50% 100%,
-        transparent 25%,
-        rgba(0, 255, 136, 0.01) 35%,
-        rgba(0, 255, 136, 0.04) 42%,
-        rgba(6, 182, 212, 0.08) 48%,
-        rgba(0, 255, 136, 0.12) 50%,
-        rgba(6, 182, 212, 0.08) 52%,
-        rgba(0, 255, 136, 0.04) 58%,
-        rgba(0, 255, 136, 0.01) 65%,
-        transparent 75%
+        transparent 20%,
+        rgba(0, 255, 136, 0.01) 30%,
+        rgba(0, 255, 136, 0.03) 38%,
+        rgba(6, 182, 212, 0.06) 45%,
+        rgba(0, 255, 136, 0.1) 50%,
+        rgba(6, 182, 212, 0.06) 55%,
+        rgba(0, 255, 136, 0.03) 62%,
+        rgba(0, 255, 136, 0.01) 70%,
+        transparent 80%
       );
       animation: bgBeamPulse 6s ease-in-out infinite;
     }
 
     @keyframes bgBeamPulse {
-      0%, 100% { opacity: 0.7; transform: translateX(-50%) scaleX(1); }
-      50% { opacity: 1; transform: translateX(-50%) scaleX(1.1); }
+      0%, 100% { opacity: 0.6; transform: translateX(-50%) rotateY(-25deg) scaleX(1); }
+      50% { opacity: 1; transform: translateX(-50%) rotateY(-25deg) scaleX(1.15); }
     }
 
     /* Secondary inner beam for depth */
     .bg-laptop-beam-inner {
       position: absolute;
-      bottom: 180px;
+      bottom: 250px;
       left: 50%;
-      transform: translateX(-50%);
-      width: 60%;
-      height: 600px;
+      transform: translateX(-50%) rotateY(-25deg);
+      width: 70%;
+      height: 900px;
       background: conic-gradient(
         from 180deg at 50% 100%,
-        transparent 35%,
-        rgba(0, 255, 136, 0.06) 45%,
-        rgba(6, 182, 212, 0.12) 50%,
-        rgba(0, 255, 136, 0.06) 55%,
-        transparent 65%
+        transparent 30%,
+        rgba(0, 255, 136, 0.04) 42%,
+        rgba(6, 182, 212, 0.1) 50%,
+        rgba(0, 255, 136, 0.04) 58%,
+        transparent 70%
       );
       animation: bgBeamPulse 6s ease-in-out infinite 0.5s;
     }
@@ -513,89 +514,118 @@
     /* Laptop screen silhouette */
     .bg-laptop-screen {
       position: absolute;
-      bottom: 60px;
+      bottom: 80px;
       left: 50%;
       transform: translateX(-50%);
-      width: 400px;
-      height: 250px;
+      width: 550px;
+      height: 350px;
       background: linear-gradient(180deg, 
-        rgba(10, 10, 15, 0.95) 0%, 
-        rgba(5, 5, 8, 0.98) 100%
+        rgba(10, 10, 18, 0.98) 0%, 
+        rgba(5, 5, 10, 0.99) 100%
       );
-      border-radius: 12px 12px 0 0;
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px 16px 0 0;
+      border: 1px solid rgba(255, 255, 255, 0.08);
       box-shadow: 
-        0 0 80px rgba(0, 255, 136, 0.15),
-        0 0 120px rgba(6, 182, 212, 0.1),
-        inset 0 0 60px rgba(0, 255, 136, 0.05);
+        0 0 100px rgba(0, 255, 136, 0.2),
+        0 0 200px rgba(6, 182, 212, 0.15),
+        inset 0 0 80px rgba(0, 255, 136, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      overflow: hidden;
     }
 
-    /* Screen glow effect */
+    /* Screen content - grid lines like dashboard */
     .bg-laptop-screen::before {
       content: '';
       position: absolute;
-      top: 10%;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        linear-gradient(rgba(0, 255, 136, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 136, 0.02) 1px, transparent 1px);
+      background-size: 30px 30px;
+      opacity: 0.5;
+    }
+
+    /* Screen glow from top */
+    .bg-laptop-screen::after {
+      content: '';
+      position: absolute;
+      top: 0;
       left: 50%;
       transform: translateX(-50%);
-      width: 80%;
-      height: 60%;
+      width: 100%;
+      height: 100%;
       background: radial-gradient(
-        ellipse at center,
-        rgba(0, 255, 136, 0.08) 0%,
-        rgba(6, 182, 212, 0.04) 40%,
-        transparent 70%
+        ellipse 80% 50% at 50% 0%,
+        rgba(0, 255, 136, 0.12) 0%,
+        rgba(6, 182, 212, 0.06) 30%,
+        transparent 60%
       );
-      filter: blur(20px);
     }
 
     /* Laptop base */
     .bg-laptop-base {
       position: absolute;
-      bottom: 45px;
+      bottom: 60px;
       left: 50%;
       transform: translateX(-50%);
-      width: 440px;
-      height: 15px;
+      width: 600px;
+      height: 20px;
       background: linear-gradient(180deg, 
-        rgba(30, 30, 40, 0.9) 0%, 
-        rgba(15, 15, 20, 0.95) 100%
+        rgba(35, 35, 50, 0.95) 0%, 
+        rgba(20, 20, 30, 0.98) 100%
       );
-      border-radius: 0 0 8px 8px;
-      border: 1px solid rgba(255, 255, 255, 0.03);
+      border-radius: 0 0 10px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
       border-top: none;
+    }
+
+    /* Laptop base notch */
+    .bg-laptop-base::before {
+      content: '';
+      position: absolute;
+      top: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 4px;
     }
 
     /* Keyboard/trackpad area perspective */
     .bg-laptop-keyboard {
       position: absolute;
-      bottom: 0;
+      bottom: -10px;
       left: 50%;
-      transform: translateX(-50%) perspective(500px) rotateX(60deg);
-      width: 500px;
-      height: 80px;
+      transform: translateX(-50%) perspective(800px) rotateX(70deg);
+      width: 650px;
+      height: 120px;
       background: linear-gradient(180deg, 
-        rgba(20, 20, 28, 0.8) 0%, 
-        rgba(10, 10, 15, 0.9) 100%
+        rgba(25, 25, 35, 0.9) 0%, 
+        rgba(12, 12, 18, 0.95) 100%
       );
-      border-radius: 4px;
-      border: 1px solid rgba(255, 255, 255, 0.02);
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.03);
     }
 
     /* Reflection under laptop */
     .bg-laptop-reflection {
       position: absolute;
-      bottom: -20px;
+      bottom: -40px;
       left: 50%;
       transform: translateX(-50%);
-      width: 500px;
-      height: 60px;
+      width: 700px;
+      height: 100px;
       background: radial-gradient(
         ellipse at center,
-        rgba(0, 255, 136, 0.12) 0%,
-        rgba(6, 182, 212, 0.06) 40%,
+        rgba(0, 255, 136, 0.15) 0%,
+        rgba(6, 182, 212, 0.08) 40%,
         transparent 70%
       );
-      filter: blur(30px);
+      filter: blur(40px);
     }
 
     @keyframes fadeInUp {
@@ -1038,28 +1068,30 @@
       .stat-number { font-size: 1.5rem; }
       
       .bg-laptop-container {
-        width: 500px;
-        bottom: -10%;
-        opacity: 0.4;
+        width: 600px;
+        height: 450px;
+        bottom: -20%;
+        left: -30%;
+        opacity: 0.35;
       }
       
       .bg-laptop-screen {
-        width: 280px;
-        height: 180px;
+        width: 350px;
+        height: 220px;
       }
       
       .bg-laptop-base {
-        width: 300px;
+        width: 380px;
       }
       
       .bg-laptop-keyboard {
-        width: 340px;
-        height: 60px;
+        width: 400px;
+        height: 80px;
       }
       
       .bg-laptop-beam,
       .bg-laptop-beam-inner {
-        height: 500px;
+        height: 600px;
       }
       
       .project-card { width: 320px; }
