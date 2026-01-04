@@ -187,30 +187,6 @@
       );
     }
 
-    /* Stars/Particles - Reduced and smoother */
-    .particles {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    .particle {
-      position: absolute;
-      width: 2px;
-      height: 2px;
-      background: rgba(255, 255, 255, 0.5);
-      border-radius: 50%;
-      animation: twinkle 4s ease-in-out infinite;
-    }
-
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.3; transform: scale(1); }
-      50% { opacity: 0.8; transform: scale(1.2); }
-    }
 
     /* Navigation */
     nav {
@@ -315,6 +291,15 @@
       text-align: center;
     }
 
+    .hero-badge, .hero-title, .hero-subtitle {
+      opacity: 0;
+      transition: opacity 1.2s cubic-bezier(0.23, 1, 0.32, 1), transform 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+      transform: translateY(30px);
+    }
+    .fade-in {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
     .hero-badge {
       display: inline-flex;
       align-items: center;
@@ -327,7 +312,6 @@
       font-size: 13px;
       font-weight: 600;
       margin-bottom: 32px;
-      animation: fadeInUp 0.6s ease-out;
     }
 
     .hero-badge::before {
@@ -349,7 +333,6 @@
       font-weight: 900;
       line-height: 1.05;
       margin-bottom: 24px;
-      animation: fadeInUp 0.6s ease-out 0.1s both;
     }
 
     .hero-title .line1 { color: var(--text-primary); display: block; }
@@ -376,7 +359,6 @@
       max-width: 600px;
       margin: 0 auto 40px;
       line-height: 1.7;
-      animation: fadeInUp 0.6s ease-out 0.2s both;
     }
 
     .hero-buttons {
@@ -519,48 +501,6 @@
       50% { transform: rotate(5deg); opacity: 1; }
     }
 
-    /* === Shooting Meteors === */
-    .meteors-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-      pointer-events: none;
-      overflow: hidden;
-    }
-
-    .meteor {
-      position: absolute;
-      width: 2px;
-      height: 80px;
-      background: linear-gradient(to bottom, transparent, rgba(34, 255, 153, 0.8), transparent);
-      border-radius: 50%;
-      transform: rotate(-45deg);
-      animation: meteorFall linear infinite;
-      opacity: 0;
-    }
-
-    .meteor::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 4px;
-      height: 4px;
-      background: #fff;
-      border-radius: 50%;
-      box-shadow: 0 0 10px 2px rgba(34, 255, 153, 0.8);
-    }
-
-    @keyframes meteorFall {
-      0% { transform: translateY(-100px) translateX(0) rotate(-45deg); opacity: 0; }
-      10% { opacity: 1; }
-      90% { opacity: 1; }
-      100% { transform: translateY(100vh) translateX(300px) rotate(-45deg); opacity: 0; }
-    }
 
     /* === Animated Gradient Border Cards === */
     .gradient-border {
@@ -1218,15 +1158,7 @@
     <div class="spotlight-2"></div>
   </div>
   
-  <!-- Meteors -->
-  <div class="meteors-container" id="meteors"></div>
   
-  <!-- Subtle Effects -->
-  <div class="noise-overlay"></div>
-  <div class="vignette"></div>
-  
-  <!-- Stars -->
-  <div class="particles" id="particles"></div>
 
   <!-- Navigation -->
   <nav>
@@ -1654,35 +1586,9 @@
     <p>© 2026 Devak Mehta. Built with passion.</p>
   </footer>
 
-  <!-- Generate Particles -->
+  <!-- Smooth scroll for anchor links and hero fade-in -->
   <script>
-    // Generate subtle star particles
-    const particlesContainer = document.getElementById('particles');
-    for (let i = 0; i < 20; i++) {
-      const particle = document.createElement('div');
-      particle.className = 'particle';
-      particle.style.left = Math.random() * 100 + '%';
-      particle.style.top = Math.random() * 100 + '%';
-      particle.style.animationDuration = (3 + Math.random() * 4) + 's';
-      particle.style.animationDelay = Math.random() * 4 + 's';
-      particle.style.width = (1 + Math.random() * 2) + 'px';
-      particle.style.height = particle.style.width;
-      particlesContainer.appendChild(particle);
-    }
-
-    // Generate shooting meteors
-    const meteorsContainer = document.getElementById('meteors');
-    for (let i = 0; i < 3; i++) {
-      const meteor = document.createElement('div');
-      meteor.className = 'meteor';
-      meteor.style.left = Math.random() * 80 + 10 + '%';
-      meteor.style.top = Math.random() * 30 + '%';
-      meteor.style.animationDuration = (2 + Math.random() * 3) + 's';
-      meteor.style.animationDelay = (Math.random() * 8) + 's';
-      meteorsContainer.appendChild(meteor);
-    }
-
-    // Smooth scroll for anchor links
+    // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -1691,6 +1597,18 @@
           target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       });
+    });
+    // Hero fade-in
+    window.addEventListener('DOMContentLoaded', function() {
+      setTimeout(function() {
+        document.querySelector('.hero-badge')?.classList.add('fade-in');
+      }, 100);
+      setTimeout(function() {
+        document.querySelector('.hero-title')?.classList.add('fade-in');
+      }, 400);
+      setTimeout(function() {
+        document.querySelector('.hero-subtitle')?.classList.add('fade-in');
+      }, 700);
     });
   </script>
 
